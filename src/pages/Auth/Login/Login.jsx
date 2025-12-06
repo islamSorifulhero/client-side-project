@@ -38,7 +38,7 @@ const Login = () => {
                 <div><a className="link link-hover">Forgot password?</a></div>
                 <button className="btn btn-neutral mt-4">Login</button>
             </form>
-            <p>New to Garments Account? <a className='text-blue-400 underline' href="/register">Register</a></p>
+            <p className='text-center'>New to Garments Account? <a className='text-blue-400 underline' href="/register">Register</a></p>
             <SocialLogin />
         </div>
     );
