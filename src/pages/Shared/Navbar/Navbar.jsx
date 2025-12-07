@@ -58,7 +58,7 @@ const Navbar = () => {
                     </ul>
                 </div>
 
-                <Link to="/" className="btn btn-ghost text-xl">
+                <Link to="/">
                     <Logo />
                 </Link>
             </div>
