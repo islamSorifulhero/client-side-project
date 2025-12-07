@@ -2,7 +2,7 @@ import React from "react";
 
 const NewsletterBanner = () => {
     return (
-        <div className="bg-primary text-white py-16 text-center">
+        <div className="bg-linear-to-t from-sky-500 to-indigo-500 text-white py-16 text-center">
             <h2 className="text-3xl font-bold mb-4">Stay Updated!</h2>
             <p className="mb-6">Subscribe to get offers, discounts & new product alerts.</p>
 

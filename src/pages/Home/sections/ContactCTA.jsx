@@ -9,7 +9,7 @@ const ContactCTA = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-primary text-white py-16 text-center rounded-none"
+            className="bg-linear-to-r/increasing from-indigo-500 to-teal-400 text-white py-16 text-center rounded-none mt-1"
         >
             <h2 className="text-3xl font-bold mb-4">
                 Need Help or Have a Question?
