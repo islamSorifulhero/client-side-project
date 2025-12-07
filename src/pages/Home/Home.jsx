@@ -8,6 +8,8 @@ import Hero from './sections/Hero';
 import ProductCategories from './sections/ProductCategories';
 import FeaturedProducts from './sections/FeaturedProducts';
 import ContactCTA from './sections/ContactCTA';
+import ReviewsCarousel from './sections/ReviewsCarousel';
+import HowItWorks from './sections/HowItWorks';
 
 // const reviewsPromise = fetch('/reviews.json').then(res => res.json());
 
@@ -22,6 +24,8 @@ const Home = () => {
             <Hero></Hero>
             <ProductCategories></ProductCategories>
             <FeaturedProducts></FeaturedProducts>
+            <HowItWorks></HowItWorks>
+            <ReviewsCarousel></ReviewsCarousel>
             <ContactCTA></ContactCTA>
         </div>
     );
