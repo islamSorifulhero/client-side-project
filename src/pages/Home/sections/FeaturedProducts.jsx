@@ -10,7 +10,7 @@ const FeaturedProducts = () => {
     const { data: products = [], isLoading } = useQuery({
         queryKey: ["featuredProducts"],
         queryFn: async () => {
-            const res = await axiosPublic.get("/products?featured=true&limit=6");
+            const res = await axiosPublic.get("/products?limit=6");
             return res.data;
         },
     });
@@ -27,27 +27,32 @@ const FeaturedProducts = () => {
                 {products.map((p) => (
                     <motion.div
                         key={p._id}
-                        initial={{ opacity: 0, y: 40 }}
+                        className="card shadow-lg rounded-xl"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        whileHover={{ scale: 1.02 }}
-                        className="card shadow-lg bg-base-100 rounded-xl"
+                        transition={{ duration: 0.3 }}
                     >
                         <figure>
                             <img
-                                src={p.images?.[0] || "https://i.ibb.co/CJmW8Rr/no-image.jpg"}
+                                src={p.image}
                                 alt={p.name}
                                 className="h-52 w-full object-cover rounded-t-xl"
                             />
                         </figure>
-
                         <div className="card-body">
                             <h2 className="text-xl font-bold">{p.name}</h2>
-                            <p className="text-lg font-semibold text-primary">${p.price}</p>
+                            <p className="text-sm text-gray-600 line-clamp-2">
+                                {p.description || "No description available"}
+                            </p>
+                            <p className="text-lg font-semibold text-primary">
+                                ${p.price}
+                            </p>
 
                             <Link
                                 to={`/product/${p._id}`}
-                                className="btn btn-sm btn-primary mt-3"
+                                className="btn btn-sm btn-primary mt-2"
                             >
                                 View Details
                             </Link>
