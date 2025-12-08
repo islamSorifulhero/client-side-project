@@ -22,8 +22,11 @@ import RiderRoute from "./RiderRoute";
 import AssignedDeliveries from "../pages/Dashboard/AssignDeliveries/AssignedDeliveries";
 import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 import ParcelTrack from "../pages/ParcelTrack/ParcelTrack";
+
+// NEW IMPORTS
 import AllProducts from "../pages/Products/AllProducts";
-import ProductDetails from "../pages/Products/ProductDetails"; // নতুন import
+import ProductDetails from "../pages/Products/ProductDetails";
+import BookingForm from "../pages/Booking/BookingForm";
 import MyOrders from "../pages/Dashboard/MyOrders";
 
 export const router = createBrowserRouter([
@@ -48,90 +51,144 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'rider',
-        element: <PrivateRoute><Rider /></PrivateRoute>
+        path: "booking/:productId",
+        element: (
+          <PrivateRoute>
+            {/* <BookingPage /> */}
+            <BookingForm></BookingForm>
+          </PrivateRoute>
+        ),
+      },
+
+      {
+        path: "rider",
+        element: (
+          <PrivateRoute>
+            <Rider />
+          </PrivateRoute>
+        ),
       },
       {
-        path: 'send-parcel',
-        element: <PrivateRoute><SendParcel /></PrivateRoute>,
-        loader: () => fetch('/serviceCenters.json').then(res => res.json())
+        path: "send-parcel",
+        element: (
+          <PrivateRoute>
+            <SendParcel />
+          </PrivateRoute>
+        ),
+        loader: () =>
+          fetch("/serviceCenters.json").then((res) => res.json()),
       },
       {
-        path: '/coverage',
+        path: "/coverage",
         Component: Coverage,
-        loader: () => fetch('/public/serviceCenters.json').then(res => res.json())
+        loader: () =>
+          fetch("/public/serviceCenters.json").then((res) => res.json()),
       },
       {
-        path: 'parcel-track/:trackingId',
+        path: "parcel-track/:trackingId",
         Component: ParcelTrack,
-      }
-    ]
+      },
+    ],
   },
+
+  // Auth routes
   {
-    path: '/',
+    path: "/",
     Component: AuthLayout,
     children: [
       {
-        path: 'login',
+        path: "login",
         Component: Login,
       },
       {
-        path: 'register',
+        path: "register",
         Component: Register,
-      }
-    ]
+      },
+    ],
   },
+
+  // Dashboard routes
   {
-    path: 'dashboard',
-    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
-        path: 'my-parcels',
+        path: "my-parcels",
         Component: MyParcels,
       },
+
+      // NEW — USER ORDERS
       {
-        path: "/dashboard/my-orders",
-        element: MyOrders,
+        path: "my-orders",
+        Component: MyOrders,
       },
+
+      // NEW — PAYMENT PAGES
       {
-        path: 'payment/:parcelId',
+        path: "payment/:bookingId",
         Component: Payment,
       },
       {
-        path: 'payment-history',
-        Component: PaymentHistory,
-      },
-      {
-        path: 'payment-success',
+        path: "payment-success",
         Component: PaymentSuccess,
       },
       {
-        path: 'payment-cancelled',
+        path: "payment-cancelled",
         Component: PaymentCancelled,
       },
-      // rider only routes
+
       {
-        path: 'assigned-deliveries',
-        element: <RiderRoute><AssignedDeliveries /></RiderRoute>
-      },
-      {
-        path: 'completed-deliveries',
-        element: <RiderRoute><CompletedDeliveries /></RiderRoute>
+        path: "payment-history",
+        Component: PaymentHistory,
       },
 
-      // admin only routers
+      // Rider only
       {
-        path: 'approve-riders',
-        element: <AdminRoute><ApproveRiders /></AdminRoute>
+        path: "assigned-deliveries",
+        element: (
+          <RiderRoute>
+            <AssignedDeliveries />
+          </RiderRoute>
+        ),
       },
       {
-        path: 'assign-riders',
-        element: <AdminRoute><AssignRiders /></AdminRoute>
+        path: "completed-deliveries",
+        element: (
+          <RiderRoute>
+            <CompletedDeliveries />
+          </RiderRoute>
+        ),
+      },
+
+      // Admin only
+      {
+        path: "approve-riders",
+        element: (
+          <AdminRoute>
+            <ApproveRiders />
+          </AdminRoute>
+        ),
       },
       {
-        path: 'users-management',
-        element: <AdminRoute><UsersManagement /></AdminRoute>
-      }
-    ]
-  }
+        path: "assign-riders",
+        element: (
+          <AdminRoute>
+            <AssignRiders />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "users-management",
+        element: (
+          <AdminRoute>
+            <UsersManagement />
+          </AdminRoute>
+        ),
+      },
+    ],
+  },
 ]);
