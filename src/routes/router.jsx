@@ -24,6 +24,7 @@ import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/Complete
 import ParcelTrack from "../pages/ParcelTrack/ParcelTrack";
 import AllProducts from "../pages/Products/AllProducts";
 import ProductDetails from "../pages/Products/ProductDetails"; // নতুন import
+import MyOrders from "../pages/Dashboard/MyOrders";
 
 export const router = createBrowserRouter([
   {
@@ -87,6 +88,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-parcels',
         Component: MyParcels,
+      },
+      {
+        path: "/dashboard/my-orders",
+        element: MyOrders,
       },
       {
         path: 'payment/:parcelId',

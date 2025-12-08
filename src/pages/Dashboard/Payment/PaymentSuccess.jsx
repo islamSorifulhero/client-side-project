@@ -1,19 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { useEffect } from "react";
+import { toast } from "react-toastify";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useLocation, useNavigate } from "react-router";
 
 const PaymentSuccess = () => {
-    return (
-        <div className="text-center py-20">
-            <h2 className="text-4xl font-bold mb-4">Payment Successful!</h2>
-            <p>Your booking is confirmed.</p>
-            <Link to="/dashboard/my-orders" className="btn btn-primary mt-4">
-                Go to My Orders
-            </Link>
-        </div>
-    );
+  const location = useLocation();
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const session_id = searchParams.get("session_id");
+
+    if (!session_id) return;
+
+    const confirmPayment = async () => {
+      try {
+        const res = await axiosSecure.post("/confirm-payment", { session_id });
+        if (res.data.success) {
+          toast.success("Payment successful! Booking confirmed.");
+          navigate("/dashboard/my-orders");
+        } else {
+          toast.error("Payment verification failed.");
+          navigate("/dashboard");
+        }
+      } catch (err) {
+        console.log(err);
+        toast.error("Payment confirmation error.");
+        navigate("/dashboard");
+      }
+    };
+
+    confirmPayment();
+  }, [location.search]);
+
+  return <p className="text-center py-20">Processing Payment...</p>;
 };
 
 export default PaymentSuccess;
+
 
 
 

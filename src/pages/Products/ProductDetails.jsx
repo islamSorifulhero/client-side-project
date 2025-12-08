@@ -1,16 +1,15 @@
-// ProductDetails.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { motion } from "framer-motion";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetails = () => {
     const { productId } = useParams();
-    const axiosPublic = useAxiosPublic();
     const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
 
     const [product, setProduct] = useState(null);
@@ -25,7 +24,7 @@ const ProductDetails = () => {
     });
 
     useEffect(() => {
-        axiosPublic.get(`/products/${productId}`)
+        axiosSecure.get(`/products/${productId}`)
             .then(res => {
                 setProduct(res.data);
                 setOrderQty(res.data?.minimumOrder || 1);
@@ -72,19 +71,19 @@ const ProductDetails = () => {
         };
 
         try {
-            const res = await axiosPublic.post("/bookings", booking);
+            // 1️⃣ Create Booking
+            const res = await axiosSecure.post("/bookings", booking);
             const bookingId = res.data.insertedId;
 
             if (product.paymentRequired) {
                 toast.info("Redirecting to payment...");
-                // Create Stripe Checkout session
-                const stripeRes = await axiosPublic.post("/create-checkout-session", {
+                // 2️⃣ Create Stripe Checkout Session
+                const stripeRes = await axiosSecure.post("/create-checkout-session", {
                     bookingId,
-                    amount: orderQty * product.price,
-                    productTitle: product.name,
-                    userEmail: user.email
+                    cost: orderQty * product.price,
+                    productTitle: product.name
                 });
-                window.location.href = stripeRes.data.url; // redirect to Stripe
+                window.location.href = stripeRes.data.url;
             } else {
                 toast.success("Booking successful! Check Dashboard → My Orders.");
                 navigate("/dashboard/my-orders");
@@ -130,7 +129,7 @@ const ProductDetails = () => {
                     )}
                 </div>
 
-                {/* Product Info & Booking */}
+                {/* Product Info & Booking Form */}
                 <div className="space-y-6">
                     <h1 className="text-3xl font-bold">{product.name}</h1>
                     <p className="text-gray-600">{product.description}</p>
@@ -153,94 +152,24 @@ const ProductDetails = () => {
                     {user && user.role !== "admin" && user.role !== "manager" ? (
                         <form onSubmit={handleSubmit} className="space-y-4 border-t pt-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <input
-                                    type="text"
-                                    name="firstName"
-                                    placeholder="First Name"
-                                    value={formData.firstName}
-                                    onChange={handleInputChange}
-                                    required
-                                    className="input input-bordered w-full"
-                                />
-                                <input
-                                    type="text"
-                                    name="lastName"
-                                    placeholder="Last Name"
-                                    value={formData.lastName}
-                                    onChange={handleInputChange}
-                                    required
-                                    className="input input-bordered w-full"
-                                />
+                                <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleInputChange} required className="input input-bordered w-full" />
+                                <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleInputChange} required className="input input-bordered w-full" />
                             </div>
 
-                            <input
-                                type="email"
-                                value={user.email}
-                                readOnly
-                                className="input input-bordered w-full"
-                            />
-
-                            <input
-                                type="text"
-                                value={product.name}
-                                readOnly
-                                className="input input-bordered w-full"
-                            />
-
-                            <input
-                                type="number"
-                                min={product.minimumOrder}
-                                max={product.availableQty}
-                                value={orderQty}
-                                onChange={handleQtyChange}
-                                className="input input-bordered w-full"
-                                placeholder="Order Quantity"
-                                required
-                            />
-
-                            <input
-                                type="text"
-                                value={orderQty * product.price}
-                                readOnly
-                                className="input input-bordered w-full"
-                                placeholder="Total Price"
-                            />
-
-                            <input
-                                type="text"
-                                name="contactNumber"
-                                value={formData.contactNumber}
-                                onChange={handleInputChange}
-                                placeholder="Contact Number"
-                                required
-                                className="input input-bordered w-full"
-                            />
-
-                            <textarea
-                                name="deliveryAddress"
-                                value={formData.deliveryAddress}
-                                onChange={handleInputChange}
-                                placeholder="Delivery Address"
-                                required
-                                className="input input-bordered w-full h-24"
-                            />
-
-                            <textarea
-                                name="additionalNotes"
-                                value={formData.additionalNotes}
-                                onChange={handleInputChange}
-                                placeholder="Additional Notes / Instructions"
-                                className="input input-bordered w-full h-20"
-                            />
+                            <input type="email" value={user.email} readOnly className="input input-bordered w-full" />
+                            <input type="text" value={product.name} readOnly className="input input-bordered w-full" />
+                            <input type="number" min={product.minimumOrder} max={product.availableQty} value={orderQty} onChange={handleQtyChange} className="input input-bordered w-full" required />
+                            <input type="text" value={orderQty * product.price} readOnly className="input input-bordered w-full" />
+                            <input type="text" name="contactNumber" value={formData.contactNumber} onChange={handleInputChange} placeholder="Contact Number" required className="input input-bordered w-full" />
+                            <textarea name="deliveryAddress" value={formData.deliveryAddress} onChange={handleInputChange} placeholder="Delivery Address" required className="input input-bordered w-full h-24" />
+                            <textarea name="additionalNotes" value={formData.additionalNotes} onChange={handleInputChange} placeholder="Additional Notes / Instructions" className="input input-bordered w-full h-20" />
 
                             <button type="submit" className="btn btn-primary w-full">
                                 {product.paymentRequired ? "Proceed to Payment" : "Place Order"}
                             </button>
                         </form>
                     ) : (
-                        <p className="text-red-500">
-                            Only logged-in users (not Admin/Manager) can place an order.
-                        </p>
+                        <p className="text-red-500">Only logged-in users (not Admin/Manager) can place an order.</p>
                     )}
                 </div>
             </div>

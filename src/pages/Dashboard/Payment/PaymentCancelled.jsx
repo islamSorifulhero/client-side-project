@@ -1,19 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const PaymentCancelled = () => {
-    return (
-        <div className="text-center py-20">
-            <h2 className="text-3xl font-bold mb-4">Payment Cancelled</h2>
-            <p>Please try again or use a different payment method.</p>
-            <Link to="/all-products" className="btn btn-primary mt-4">
-                Back to Products
-            </Link>
-        </div>
-    );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    toast.warning("Payment cancelled.");
+    navigate("/dashboard");
+  }, []);
+
+  return <p className="text-center py-20">Payment Cancelled</p>;
 };
 
 export default PaymentCancelled;
+
 
 
 
