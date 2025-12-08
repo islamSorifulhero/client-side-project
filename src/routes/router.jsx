@@ -22,6 +22,8 @@ import RiderRoute from "./RiderRoute";
 import AssignedDeliveries from "../pages/Dashboard/AssignDeliveries/AssignedDeliveries";
 import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 import ParcelTrack from "../pages/ParcelTrack/ParcelTrack";
+import AllProducts from "../pages/Products/AllProducts";
+// import AllProducts from "../pages/Products/AllProducts";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +33,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "all-products",
+        Component: AllProducts,
       },
       {
         path: 'rider',

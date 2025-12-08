@@ -36,7 +36,7 @@ const FeaturedProducts = () => {
                     >
                         <figure>
                             <img
-                                src={p.image}
+                                src={p.images}
                                 alt={p.name}
                                 className="h-52 w-full object-cover rounded-t-xl"
                             />
