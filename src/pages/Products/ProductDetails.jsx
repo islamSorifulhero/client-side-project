@@ -71,13 +71,13 @@ const ProductDetails = () => {
         };
 
         try {
-            // 1️⃣ Create Booking
+
             const res = await axiosSecure.post("/bookings", booking);
             const bookingId = res.data.insertedId;
 
             if (product.paymentRequired) {
                 toast.info("Redirecting to payment...");
-                // 2️⃣ Create Stripe Checkout Session
+
                 const stripeRes = await axiosSecure.post("/create-checkout-session", {
                     bookingId,
                     cost: orderQty * product.price,
@@ -85,7 +85,7 @@ const ProductDetails = () => {
                 });
                 window.location.href = stripeRes.data.url;
             } else {
-                toast.success("Booking successful! Check Dashboard → My Orders.");
+                toast.success("Booking successful My Orders");
                 navigate("/dashboard/my-orders");
             }
         } catch (err) {
@@ -102,7 +102,7 @@ const ProductDetails = () => {
             transition={{ duration: 0.5 }}
         >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Product Media */}
+
                 <div className="space-y-4">
                     {product.images?.length > 0 ? (
                         product.images.map((img, index) => (
@@ -129,7 +129,6 @@ const ProductDetails = () => {
                     )}
                 </div>
 
-                {/* Product Info & Booking Form */}
                 <div className="space-y-6">
                     <h1 className="text-3xl font-bold">{product.name}</h1>
                     <p className="text-gray-600">{product.description}</p>
