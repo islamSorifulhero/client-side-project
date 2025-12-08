@@ -23,7 +23,7 @@ import AssignedDeliveries from "../pages/Dashboard/AssignDeliveries/AssignedDeli
 import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 import ParcelTrack from "../pages/ParcelTrack/ParcelTrack";
 import AllProducts from "../pages/Products/AllProducts";
-// import AllProducts from "../pages/Products/AllProducts";
+import ProductDetails from "../pages/Products/ProductDetails"; // নতুন import
 
 export const router = createBrowserRouter([
   {
@@ -39,14 +39,21 @@ export const router = createBrowserRouter([
         Component: AllProducts,
       },
       {
+        path: "product/:productId",
+        element: (
+          <PrivateRoute>
+            <ProductDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: 'rider',
-        element: <PrivateRoute><Rider></Rider></PrivateRoute>
+        element: <PrivateRoute><Rider /></PrivateRoute>
       },
       {
         path: 'send-parcel',
-        element: <PrivateRoute><SendParcel></SendParcel></PrivateRoute>,
+        element: <PrivateRoute><SendParcel /></PrivateRoute>,
         loader: () => fetch('/serviceCenters.json').then(res => res.json())
-
       },
       {
         path: '/coverage',
@@ -75,7 +82,7 @@ export const router = createBrowserRouter([
   },
   {
     path: 'dashboard',
-    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
       {
         path: 'my-parcels',
@@ -100,25 +107,25 @@ export const router = createBrowserRouter([
       // rider only routes
       {
         path: 'assigned-deliveries',
-        element: <RiderRoute><AssignedDeliveries></AssignedDeliveries></RiderRoute>
+        element: <RiderRoute><AssignedDeliveries /></RiderRoute>
       },
       {
         path: 'completed-deliveries',
-        element: <RiderRoute><CompletedDeliveries></CompletedDeliveries></RiderRoute>
+        element: <RiderRoute><CompletedDeliveries /></RiderRoute>
       },
 
       // admin only routers
       {
         path: 'approve-riders',
-        element: <AdminRoute><ApproveRiders></ApproveRiders></AdminRoute>
+        element: <AdminRoute><ApproveRiders /></AdminRoute>
       },
       {
         path: 'assign-riders',
-        element: <AdminRoute><AssignRiders></AssignRiders></AdminRoute>
+        element: <AdminRoute><AssignRiders /></AdminRoute>
       },
       {
         path: 'users-management',
-        element: <AdminRoute><UsersManagement></UsersManagement></AdminRoute>
+        element: <AdminRoute><UsersManagement /></AdminRoute>
       }
     ]
   }
