@@ -1,212 +1,191 @@
-import { useState, useEffect } from "react";
+// src/pages/Booking/BookingForm.jsx
+import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 
 const BookingForm = () => {
-    const { id } = useParams();
-    const axiosSecure = useAxiosSecure();
-    const navigate = useNavigate();
-    const { user } = useAuth();
+  const { id } = useParams(); // expect route like /booking/:id  OR adjust if you use productId
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-    const [product, setProduct] = useState(null);
-    const [qty, setQty] = useState(0);
-    const [cost, setCost] = useState(0);
+  const [product, setProduct] = useState(null);
+  const [qty, setQty] = useState(0);
+  const [cost, setCost] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        axiosSecure.get(`/products/${id}`).then((res) => {
-            setProduct(res.data);
-            setQty(res.data?.minOrder || 1);
-            setCost((res.data?.price || 0) * (res.data?.minOrder || 1));
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    axiosSecure.get(`/products/${id}`)
+      .then(res => {
+        const p = res.data;
+        setProduct(p);
+        const min = p.minimumOrder ?? p.minOrder ?? 1;
+        const available = p.availableQty ?? p.quantity ?? 0;
+        const initialQty = Math.min(Math.max(min, 1), available || min);
+        setQty(initialQty);
+        setCost((p.price || 0) * initialQty);
+      })
+      .catch(err => {
+        console.error("Product load error:", err);
+        toast.error("Failed to load product.");
+      })
+      .finally(() => setLoading(false));
+  }, [id, axiosSecure]);
+
+  const handleQtyChange = (value) => {
+    if (!product) return;
+    const min = product.minimumOrder ?? product.minOrder ?? 1;
+    const available = product.availableQty ?? product.quantity ?? 0;
+
+    if (value < min) {
+      toast.error(`Minimum order is ${min}`);
+      value = min;
+    }
+    if (available && value > available) {
+      toast.error(`Available quantity is ${available}`);
+      value = available;
+    }
+    setQty(value);
+    setCost((product.price || 0) * value);
+  };
+
+  const handlePlaceOrder = async (e) => {
+    e.preventDefault();
+    if (!user) {
+      toast.warning("Please login first.");
+      return navigate("/login");
+    }
+
+    const form = new FormData(e.target);
+    const bookingData = {
+      productId: product._id,
+      productTitle: product.name,
+      productImage: product.images?.[0] || product.image || "",
+      price: product.price,
+      orderQty: qty,
+      orderPrice: cost,
+
+      firstName: form.get("firstName"),
+      lastName: form.get("lastName"),
+      phone: form.get("phone"),
+      address: form.get("address"),
+      notes: form.get("notes"),
+
+      userEmail: user.email,
+      paymentRequired: (product.paymentOption === "online") || !!product.paymentRequired,
+      createdAt: new Date()
+    };
+
+    try {
+      const { data } = await axiosSecure.post("/bookings", bookingData);
+
+      if (!data.insertedId) {
+        toast.error("Booking failed. Try again!");
+        return;
+      }
+
+      toast.success("Booking created!");
+
+      if (bookingData.paymentRequired) {
+        // create checkout session on server
+        const payRes = await axiosSecure.post("/create-checkout-session", {
+          cost,
+          bookingId: data.insertedId,
+          productTitle: product.name,
+          userEmail: user.email
         });
-    }, [axiosSecure, id]);
+        // redirect browser to stripe checkout
+        window.location.href = payRes.data.url;
+        return;
+      }
 
-    const handleQtyChange = (value) => {
-        if (!product) return;
+      // COD / no payment
+      navigate("/dashboard/my-orders");
+    } catch (err) {
+      console.error("Place order error:", err);
+      toast.error("Booking failed. Try again!");
+    }
+  };
 
-        if (value < product.minOrder) {
-            toast.error(`Minimum order is ${product.minOrder}`);
-            setQty(product.minOrder);
-            setCost(product.price * product.minOrder);
-            return;
-        }
+  if (loading) return <p className="text-center py-8">Loading product...</p>;
+  if (!product) return <p className="text-center py-8">Product not found.</p>;
 
-        if (value > product.quantity) {
-            toast.error(`Available quantity is ${product.quantity}`);
-            setQty(product.quantity);
-            setCost(product.price * product.quantity);
-            return;
-        }
+  const min = product.minimumOrder ?? product.minOrder ?? 1;
+  const available = product.availableQty ?? product.quantity ?? 0;
 
-        setQty(value);
-        setCost(product.price * value);
-    };
+  return (
+    <div className="max-w-3xl mx-auto p-5">
+      <h2 className="text-2xl font-bold mb-4">Book: {product.name}</h2>
 
-    const handlePlaceOrder = async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.target);
-
-        const bookingData = {
-            productId: product._id,
-            productTitle: product.name,
-            productImage: product.image,
-            price: product.price,
-            orderQty: qty,
-            orderCost: cost,
-
-            firstName: formData.get("firstName"),
-            lastName: formData.get("lastName"),
-            phone: formData.get("phone"),
-            address: formData.get("address"),
-            notes: formData.get("notes"),
-
-            userEmail: user.email,
-            paymentRequired: product.paymentOption === "online",
-        };
-
-        // 1️⃣ Save booking to DB first
-        const { data } = await axiosSecure.post("/bookings", bookingData);
-
-        if (!data.insertedId) {
-            toast.error("Booking failed. Try again!");
-            return;
-        }
-
-        toast.success("Booking created!");
-
-        // 2️⃣ If online payment → redirect to Stripe
-        if (product.paymentOption === "online") {
-            const payRes = await axiosSecure.post("/create-checkout-session", {
-                cost,
-                bookingId: data.insertedId,
-                productTitle: product.name,
-                userEmail: user.email,
-            });
-
-            window.location.href = payRes.data.url;
-            return;
-        }
-
-        // 3️⃣ For Cash On Delivery → redirect to My Orders
-        navigate("/dashboard/my-orders");
-    };
-
-    if (!product)
-        return (
-            <p className="text-center py-10 text-xl">Loading product details...</p>
-        );
-
-    return (
-        <div className="max-w-3xl mx-auto p-5">
-            <h2 className="text-2xl font-bold mb-4">Book: {product.name}</h2>
-
-            <form onSubmit={handlePlaceOrder} className="space-y-4 bg-white p-6 rounded-lg shadow">
-
-                {/* Email */}
-                <div>
-                    <label className="font-semibold">Email</label>
-                    <input
-                        type="email"
-                        value={user.email}
-                        readOnly
-                        className="input input-bordered w-full bg-gray-100"
-                    />
-                </div>
-
-                {/* Product Title */}
-                <div>
-                    <label className="font-semibold">Product</label>
-                    <input
-                        type="text"
-                        value={product.name}
-                        readOnly
-                        className="input input-bordered w-full bg-gray-100"
-                    />
-                </div>
-
-                {/* Price */}
-                <div>
-                    <label className="font-semibold">Price (each)</label>
-                    <input
-                        type="text"
-                        value={`$${product.price}`}
-                        readOnly
-                        className="input input-bordered w-full bg-gray-100"
-                    />
-                </div>
-
-                {/* Quantity */}
-                <div>
-                    <label className="font-semibold">Order Quantity</label>
-                    <input
-                        type="number"
-                        min={product.minOrder}
-                        max={product.quantity}
-                        value={qty}
-                        onChange={(e) => handleQtyChange(parseInt(e.target.value))}
-                        className="input input-bordered w-full"
-                    />
-                    <p className="text-sm text-gray-500">
-                        Min: {product.minOrder} | Available: {product.quantity}
-                    </p>
-                </div>
-
-                {/* Total Cost */}
-                <div>
-                    <label className="font-semibold">Total Price</label>
-                    <input
-                        type="text"
-                        value={`$${cost}`}
-                        readOnly
-                        className="input input-bordered w-full bg-gray-100"
-                    />
-                </div>
-
-                {/* First Name */}
-                <div>
-                    <label className="font-semibold">First Name</label>
-                    <input name="firstName" required className="input input-bordered w-full" />
-                </div>
-
-                {/* Last Name */}
-                <div>
-                    <label className="font-semibold">Last Name</label>
-                    <input name="lastName" required className="input input-bordered w-full" />
-                </div>
-
-                {/* Phone */}
-                <div>
-                    <label className="font-semibold">Phone Number</label>
-                    <input name="phone" required className="input input-bordered w-full" />
-                </div>
-
-                {/* Address */}
-                <div>
-                    <label className="font-semibold">Delivery Address</label>
-                    <textarea
-                        name="address"
-                        required
-                        className="textarea textarea-bordered w-full"
-                    ></textarea>
-                </div>
-
-                {/* Notes */}
-                <div>
-                    <label className="font-semibold">Additional Notes</label>
-                    <textarea name="notes" className="textarea textarea-bordered w-full"></textarea>
-                </div>
-
-                {/* ORDER BUTTON */}
-                <button className="btn btn-primary w-full mt-3">
-                    {product.paymentOption === "online"
-                        ? "Proceed to Payment"
-                        : "Place Order"}
-                </button>
-            </form>
+      <form onSubmit={handlePlaceOrder} className="space-y-4 bg-white p-6 rounded-lg shadow">
+        <div>
+          <label className="font-semibold">Email</label>
+          <input type="email" value={user.email} readOnly className="input input-bordered w-full bg-gray-100" />
         </div>
-    );
+
+        <div>
+          <label className="font-semibold">Product</label>
+          <input type="text" value={product.name} readOnly className="input input-bordered w-full bg-gray-100" />
+        </div>
+
+        <div>
+          <label className="font-semibold">Price (each)</label>
+          <input type="text" value={`$${product.price}`} readOnly className="input input-bordered w-full bg-gray-100" />
+        </div>
+
+        <div>
+          <label className="font-semibold">Order Quantity</label>
+          <input
+            type="number"
+            min={min}
+            max={available || undefined}
+            value={qty}
+            onChange={(e) => handleQtyChange(parseInt(e.target.value || 0))}
+            className="input input-bordered w-full"
+          />
+          <p className="text-sm text-gray-500">Min: {min} {available ? `| Available: ${available}` : ""}</p>
+        </div>
+
+        <div>
+          <label className="font-semibold">Total Price</label>
+          <input type="text" value={`$${cost}`} readOnly className="input input-bordered w-full bg-gray-100" />
+        </div>
+
+        <div>
+          <label className="font-semibold">First Name</label>
+          <input name="firstName" required className="input input-bordered w-full" />
+        </div>
+
+        <div>
+          <label className="font-semibold">Last Name</label>
+          <input name="lastName" required className="input input-bordered w-full" />
+        </div>
+
+        <div>
+          <label className="font-semibold">Phone Number</label>
+          <input name="phone" required className="input input-bordered w-full" />
+        </div>
+
+        <div>
+          <label className="font-semibold">Delivery Address</label>
+          <textarea name="address" required className="textarea textarea-bordered w-full"></textarea>
+        </div>
+
+        <div>
+          <label className="font-semibold">Additional Notes</label>
+          <textarea name="notes" className="textarea textarea-bordered w-full"></textarea>
+        </div>
+
+        <button className="btn btn-primary w-full mt-3">
+          {product.paymentOption === "online" || product.paymentRequired ? "Proceed to Payment" : "Place Order"}
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default BookingForm;

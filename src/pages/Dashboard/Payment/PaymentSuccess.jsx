@@ -1,43 +1,47 @@
-import React, { useEffect } from "react";
-import { toast } from "react-toastify";
+// src/pages/Dashboard/Payment/PaymentSuccess.jsx
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useLocation, useNavigate } from "react-router";
 
 const PaymentSuccess = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [info, setInfo] = useState(null);
   const axiosSecure = useAxiosSecure();
+  const sessionId = searchParams.get("session_id");
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const session_id = searchParams.get("session_id");
+    if (!sessionId) return;
+    // call server endpoint that will verify session and return trackingId / booking info
+    axiosSecure.get(`/payment-success?session_id=${sessionId}`)
+      .then(res => {
+        setInfo(res.data); // expect { success: true, trackingId, transactionId, ... }
+      })
+      .catch(err => {
+        console.error("Payment success fetch error:", err);
+      });
+  }, [sessionId, axiosSecure]);
 
-    if (!session_id) return;
+  if (!sessionId) return <p className="py-8 text-center">No session id provided.</p>;
 
-    const confirmPayment = async () => {
-      try {
-        const res = await axiosSecure.post("/confirm-payment", { session_id });
-        if (res.data.success) {
-          toast.success("Payment successful! Booking confirmed.");
-          navigate("/dashboard/my-orders");
-        } else {
-          toast.error("Payment verification failed.");
-          navigate("/dashboard");
-        }
-      } catch (err) {
-        console.log(err);
-        toast.error("Payment confirmation error.");
-        navigate("/dashboard");
-      }
-    };
+  return (
+    <div className="max-w-3xl mx-auto p-6 text-center">
+      <h2 className="text-3xl font-bold mb-4">Payment Successful</h2>
 
-    confirmPayment();
-  }, [location.search]);
-
-  return <p className="text-center py-20">Processing Payment...</p>;
+      {info ? (
+        <div className="space-y-2">
+          <p>Transaction ID: <strong>{info.transactionId}</strong></p>
+          <p>Tracking ID: <strong>{info.trackingId}</strong></p>
+          <p>Message: {info.message || "Payment processed successfully."}</p>
+        </div>
+      ) : (
+        <p>Verifying payment, please wait...</p>
+      )}
+    </div>
+  );
 };
 
 export default PaymentSuccess;
+
 
 
 

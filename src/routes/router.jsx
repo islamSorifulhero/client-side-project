@@ -1,3 +1,4 @@
+// src/routes/router.jsx
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
@@ -22,8 +23,6 @@ import RiderRoute from "./RiderRoute";
 import AssignedDeliveries from "../pages/Dashboard/AssignDeliveries/AssignedDeliveries";
 import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 import ParcelTrack from "../pages/ParcelTrack/ParcelTrack";
-
-// NEW IMPORTS
 import AllProducts from "../pages/Products/AllProducts";
 import ProductDetails from "../pages/Products/ProductDetails";
 import BookingForm from "../pages/Booking/BookingForm";
@@ -34,161 +33,51 @@ export const router = createBrowserRouter([
     path: "/",
     Component: RootLayout,
     children: [
-      {
-        index: true,
-        Component: Home,
-      },
-      {
-        path: "all-products",
-        Component: AllProducts,
-      },
-      {
-        path: "product/:productId",
-        element: (
-          <PrivateRoute>
-            <ProductDetails />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "booking/:productId",
-        element: (
-          <PrivateRoute>
-            {/* <BookingPage /> */}
-            <BookingForm></BookingForm>
-          </PrivateRoute>
-        ),
-      },
-
-      {
-        path: "rider",
-        element: (
-          <PrivateRoute>
-            <Rider />
-          </PrivateRoute>
-        ),
-      },
+      { index: true, Component: Home },
+      { path: "all-products", Component: AllProducts },
+      { path: "product/:productId", Component: ProductDetails }, // product details
+      { path: "booking/:id", Component: BookingForm }, // booking form route
+      { path: "rider", element: <PrivateRoute><Rider /></PrivateRoute> },
       {
         path: "send-parcel",
-        element: (
-          <PrivateRoute>
-            <SendParcel />
-          </PrivateRoute>
-        ),
-        loader: () =>
-          fetch("/serviceCenters.json").then((res) => res.json()),
+        element: <PrivateRoute><SendParcel /></PrivateRoute>,
+        loader: () => fetch('/serviceCenters.json').then(res => res.json())
       },
       {
         path: "/coverage",
         Component: Coverage,
-        loader: () =>
-          fetch("/public/serviceCenters.json").then((res) => res.json()),
+        loader: () => fetch('/public/serviceCenters.json').then(res => res.json())
       },
-      {
-        path: "parcel-track/:trackingId",
-        Component: ParcelTrack,
-      },
-    ],
+      { path: "parcel-track/:trackingId", Component: ParcelTrack },
+    ]
   },
-
-  // Auth routes
   {
     path: "/",
     Component: AuthLayout,
     children: [
-      {
-        path: "login",
-        Component: Login,
-      },
-      {
-        path: "register",
-        Component: Register,
-      },
-    ],
+      { path: "login", Component: Login },
+      { path: "register", Component: Register }
+    ]
   },
-
-  // Dashboard routes
   {
     path: "dashboard",
-    element: (
-      <PrivateRoute>
-        <DashboardLayout />
-      </PrivateRoute>
-    ),
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
-      {
-        path: "my-parcels",
-        Component: MyParcels,
-      },
+      { path: "my-parcels", Component: MyParcels },
+      { path: "my-orders", Component: MyOrders },
+      { path: "payment/:parcelId", Component: Payment },
+      { path: "payment-history", Component: PaymentHistory },
+      { path: "payment-success", Component: PaymentSuccess },
+      { path: "payment-cancelled", Component: PaymentCancelled },
 
-      // NEW — USER ORDERS
-      {
-        path: "my-orders",
-        Component: MyOrders,
-      },
+      // rider-only
+      { path: "assigned-deliveries", element: <RiderRoute><AssignedDeliveries /></RiderRoute> },
+      { path: "completed-deliveries", element: <RiderRoute><CompletedDeliveries /></RiderRoute> },
 
-      // NEW — PAYMENT PAGES
-      {
-        path: "payment/:bookingId",
-        Component: Payment,
-      },
-      {
-        path: "payment-success",
-        Component: PaymentSuccess,
-      },
-      {
-        path: "payment-cancelled",
-        Component: PaymentCancelled,
-      },
-
-      {
-        path: "payment-history",
-        Component: PaymentHistory,
-      },
-
-      // Rider only
-      {
-        path: "assigned-deliveries",
-        element: (
-          <RiderRoute>
-            <AssignedDeliveries />
-          </RiderRoute>
-        ),
-      },
-      {
-        path: "completed-deliveries",
-        element: (
-          <RiderRoute>
-            <CompletedDeliveries />
-          </RiderRoute>
-        ),
-      },
-
-      // Admin only
-      {
-        path: "approve-riders",
-        element: (
-          <AdminRoute>
-            <ApproveRiders />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "assign-riders",
-        element: (
-          <AdminRoute>
-            <AssignRiders />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "users-management",
-        element: (
-          <AdminRoute>
-            <UsersManagement />
-          </AdminRoute>
-        ),
-      },
-    ],
-  },
+      // admin
+      { path: "approve-riders", element: <AdminRoute><ApproveRiders /></AdminRoute> },
+      { path: "assign-riders", element: <AdminRoute><AssignRiders /></AdminRoute> },
+      { path: "users-management", element: <AdminRoute><UsersManagement /></AdminRoute> },
+    ]
+  }
 ]);

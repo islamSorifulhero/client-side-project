@@ -12,36 +12,38 @@ const useAxiosSecure = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const reqInterceptor = axiosSecure.interceptors.request.use(config => {
-            config.headers.Authorization = `Bearer ${user?.accessToken}`
-            return config
-        })
+        const reqInterceptor = axiosSecure.interceptors.request.use(async (config) => {
 
-
-        // interceptor response
-        const resInterceptor = axiosSecure.interceptors.response.use((response) => {
-            return response;
-        }, (error) => {
-            console.log(error);
-
-            const statusCode = error.status;
-            if (statusCode === 401 || statusCode === 403) {
-                logOut()
-                    .then(() => {
-                        navigate('/login')
-                    })
+            // FIX: Firebase user must give latest idToken
+            if (user) {
+                const idToken = await user.getIdToken();
+                config.headers.Authorization = `Bearer ${idToken}`;
             }
 
-
-            return Promise.reject(error);
+            return config;
         })
+
+        const resInterceptor = axiosSecure.interceptors.response.use(
+            (response) => response,
+            (error) => {
+                console.log(error);
+
+                const status = error?.response?.status;
+
+                if (status === 401 || status === 403) {
+                    logOut().then(() => navigate('/login'));
+                }
+
+                return Promise.reject(error);
+            }
+        );
 
         return () => {
             axiosSecure.interceptors.request.eject(reqInterceptor);
             axiosSecure.interceptors.response.eject(resInterceptor);
-        }
+        };
 
-    }, [user, logOut, navigate])
+    }, [user, logOut, navigate]);
 
     return axiosSecure;
 };
