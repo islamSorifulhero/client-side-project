@@ -18,11 +18,8 @@ import NewsletterBanner from './sections/NewsletterBanner';
 const Home = () => {
     return (
         <div>
-            {/* <Banner></Banner>
-            <HowToWork></HowToWork>
-            <OurService></OurService>
-            <Brands></Brands>
-            <Reviews reviewsPromise={reviewsPromise}></Reviews> */}
+            {/* 
+            <Brands></Brands> */}
             <Hero></Hero>
             <ProductCategories></ProductCategories>
             <FeaturedProducts></FeaturedProducts>
