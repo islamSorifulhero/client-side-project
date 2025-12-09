@@ -1,3 +1,4 @@
+// src/layouts/DashboardLayout.jsx
 import React from 'react';
 import { CiDeliveryTruck } from 'react-icons/ci';
 import { FaMotorcycle, FaRegCreditCard, FaTasks, FaUsers } from 'react-icons/fa';
@@ -6,111 +7,198 @@ import useRole from '../hooks/useRole';
 import { RiEBikeFill } from 'react-icons/ri';
 import { SiGoogletasks } from 'react-icons/si';
 import logoImg from '../assets/logo.png';
+import useAuth from '../hooks/useAuth';
 
 const DashboardLayout = () => {
-    const { role } = useRole();
-    return (
-        <div className="drawer lg:drawer-open max-w-7xl mx-auto ">
-            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
-                {/* Navbar */}
-                <nav className="navbar w-full bg-base-300">
-                    <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost">
-                        {/* Sidebar toggle icon */}
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
-                    </label>
-                    <div className="px-4">Zap Shift Dashboard</div>
-                </nav>
-                {/* Page content here */}
-                <Outlet></Outlet>
+  const { role } = useRole();
+  const { user, logOut } = useAuth();
 
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      // optionally navigate away or show toast from caller
+    } catch (err) {
+      console.error('Logout error', err);
+    }
+  };
+
+  return (
+    <div className="drawer lg:drawer-open max-w-7xl mx-auto">
+      <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
+      <div className="drawer-content flex flex-col min-h-screen">
+        {/* NAVBAR */}
+        <header className="w-full bg-base-300 border-b">
+          <div className="flex items-center justify-between px-4 py-3">
+            <div className="flex items-center gap-3">
+              <label
+                htmlFor="dashboard-drawer"
+                aria-label="Open sidebar"
+                className="btn btn-ghost lg:hidden p-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </label>
+
+              <Link to="/" className="flex items-center gap-3">
+                <img src={logoImg} alt="Logo" className="h-9 w-9 object-contain" />
+                <span className="font-semibold">Garments Order & Production Tracker</span>
+              </Link>
             </div>
 
-            <div className="drawer-side is-drawer-close:overflow-visible">
-                <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-                <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-                    {/* Sidebar content here */}
-                    <ul className="menu w-full grow">
-                        {/* List item */}
-                        <li>
-                            <Link to="/"><img src={logoImg} alt="" /></Link>
-                        </li>
-                        <li>
-                            <Link to="/dashboard" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
-                                {/* Home icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                                <span className="is-drawer-close:hidden">Home page</span>
-                            </Link>
-                        </li>
+            <div className="flex items-center gap-3">
+              {user ? (
+                <>
+                  <div className="flex items-center gap-3">
+                    {user.photoURL ? (
+                      <img
+                        src={user.photoURL}
+                        alt={user.displayName || 'User'}
+                        className="h-9 w-9 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-9 w-9 rounded-full bg-gray-300 flex items-center justify-center">
+                        <span className="text-sm">{(user.displayName || 'U').charAt(0).toUpperCase()}</span>
+                      </div>
+                    )}
 
-                        {/* our dashboard links */}
-                        <li>
-                            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="MyParcels" to="/dashboard/my-parcels">
-                                <CiDeliveryTruck />
-                                <span className="is-drawer-close:hidden">My Parcels</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment History" to="/dashboard/payment-history">
-                                <FaRegCreditCard />
-                                <span className="is-drawer-close:hidden">Payment History</span>
-                            </NavLink>
-                        </li>
-                        {
-                            role === 'rider' && <>
-                                <li>
-                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assigned Deliveries" to="/dashboard/assigned-deliveries">
-                                        <FaTasks />
-                                        <span className="is-drawer-close:hidden">Assigned Deliveries</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Completed Deliveries" to="/dashboard/completed-deliveries">
-                                        <SiGoogletasks />
-                                        <span className="is-drawer-close:hidden">Completed Deliveries</span>
-                                    </NavLink>
-                                </li>
-                            </>
-                        }
+                    <div className="hidden md:block">
+                      <div className="text-sm font-medium">{user.displayName || user.email}</div>
+                      <div className="text-xs text-gray-500">{role || 'user'}</div>
+                    </div>
 
-
-                        {/* admin only links */}
-                        {
-                            role === 'admin' && <>
-                                <li>
-                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Riders" to="/dashboard/approve-riders">
-                                        <FaMotorcycle />
-                                        <span className="is-drawer-close:hidden">Approve Riders</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign Riders" to="/dashboard/assign-riders">
-                                        <RiEBikeFill />
-                                        <span className="is-drawer-close:hidden">Assign Riders</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Users Management" to="/dashboard/users-management">
-                                        <FaUsers></FaUsers>
-                                        <span className="is-drawer-close:hidden">Users Management</span>
-                                    </NavLink>
-                                </li>
-                            </>
-                        }
-
-                        {/* List item */}
-                        <li>
-                            <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
-                                {/* Settings icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg>
-                                <span className="is-drawer-close:hidden">Settings</span>
-                            </button>
-                        </li>
-                    </ul>
+                    <button
+                      onClick={handleLogout}
+                      aria-label="Log out"
+                      className="btn btn-ghost btn-sm ml-2"
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="flex gap-2">
+                  <Link to="/login" className="btn btn-ghost btn-sm">Login</Link>
+                  <Link to="/register" className="btn btn-primary btn-sm">Register</Link>
                 </div>
+              )}
             </div>
-        </div>
-    );
+          </div>
+        </header>
+
+        {/* MAIN CONTENT (OUTLET) */}
+        <main className="p-4">
+          <Outlet />
+        </main>
+      </div>
+
+      {/* SIDEBAR */}
+      <div className="drawer-side">
+        <label htmlFor="dashboard-drawer" className="drawer-overlay" aria-hidden="true"></label>
+
+        <aside className="w-64 bg-base-200 border-r min-h-screen">
+          <div className="p-4 border-b">
+            <Link to="/" className="flex items-center gap-3">
+              <img src={logoImg} alt="Logo" className="h-10 w-10 object-contain" />
+              <div>
+                <div className="font-bold">G.O.P Tracker</div>
+                <div className="text-xs text-gray-500">Dashboard</div>
+              </div>
+            </Link>
+          </div>
+
+          <nav className="p-2">
+            <ul className="menu w-full">
+              <li>
+                <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="inline-block mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span>Home page</span>
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/dashboard/my-parcels">
+                  <CiDeliveryTruck className="inline-block mr-2" />
+                  <span>My Parcels</span>
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/dashboard/payment-history">
+                  <FaRegCreditCard className="inline-block mr-2" />
+                  <span>Payment History</span>
+                </NavLink>
+              </li>
+
+              {role === 'rider' && (
+                <>
+                  <li>
+                    <NavLink to="/dashboard/assigned-deliveries">
+                      <FaTasks className="inline-block mr-2" />
+                      <span>Assigned Deliveries</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/dashboard/completed-deliveries">
+                      <SiGoogletasks className="inline-block mr-2" />
+                      <span>Completed Deliveries</span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+              {role === 'admin' && (
+                <>
+                  <li>
+                    <NavLink to="/dashboard/approve-riders">
+                      <FaMotorcycle className="inline-block mr-2" />
+                      <span>Approve Riders</span>
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink to="/dashboard/assign-riders">
+                      <RiEBikeFill className="inline-block mr-2" />
+                      <span>Assign Riders</span>
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink to="/dashboard/users-management">
+                      <FaUsers className="inline-block mr-2" />
+                      <span>Users Management</span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+              <li className="mt-4">
+                <NavLink to="/dashboard/profile">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="inline-block mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="7" r="4" strokeWidth="1.5"/>
+                    <path d="M5.5 21a8.38 8.38 0 0 1 13 0" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                  <span>Profile</span>
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
+
+          <div className="p-4 border-t mt-auto w-full">
+            <p className="text-xs text-gray-500">© {new Date().getFullYear()} G.O.P Tracker</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
 };
 
 export default DashboardLayout;
