@@ -1,11 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Electronic from "../../../assets/Electronic-Devices.png"
+import Fashion from "../../../assets/Fashion.jpg"
+import HomeAppliances from "../../../assets/Home appliances.jpg"
 
 const categories = [
-    { name: "Electronics", img: "https://i.ibb.co/smKdNbt/c1.jpg" },
-    { name: "Fashion", img: "https://i.ibb.co/0jVKc7C/c2.jpg" },
-    { name: "Home Appliances", img: "https://i.ibb.co/pdxj1Kx/c3.jpg" },
-];
+    { name: "Electronics", img: Electronic },
+    { name: "Fashion", img: Fashion },
+    { name: "Home Appliances", img: HomeAppliances },]
 
 const ProductCategories = () => {
     return (
