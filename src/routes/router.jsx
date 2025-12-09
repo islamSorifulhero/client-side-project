@@ -64,7 +64,7 @@ export const router = createBrowserRouter([
     element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
       { path: "my-parcels", Component: MyParcels },
-      { path: "my-orders", Component: MyOrders },
+      { path: "/dashboard/my-orders", Component: MyOrders },
       { path: "payment/:parcelId", Component: Payment },
       { path: "payment-history", Component: PaymentHistory },
       { path: "payment-success", Component: PaymentSuccess },
