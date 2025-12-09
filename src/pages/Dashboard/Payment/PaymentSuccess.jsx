@@ -1,4 +1,3 @@
-// src/pages/Dashboard/Payment/PaymentSuccess.jsx
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";

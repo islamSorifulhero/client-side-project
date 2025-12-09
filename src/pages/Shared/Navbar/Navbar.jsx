@@ -12,7 +12,6 @@ const Navbar = () => {
             .catch(error => console.log(error));
     };
 
-    // -------- COMMON MAIN MENU (DOCUMENT অনুযায়ী) --------
     const mainMenu = (
         <>
             <li><NavLink to="/">Home</NavLink></li>
@@ -44,7 +43,7 @@ const Navbar = () => {
 
                         {mainMenu}
 
-                        {/* Mobile এ অতিরিক্ত Auth buttons */}
+                        {/* Mobile a Auth buttons */}
                         {!user && (
                             <>
                                 <li><NavLink to="/login">Login</NavLink></li>
