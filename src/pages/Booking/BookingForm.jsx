@@ -1,4 +1,3 @@
-// src/pages/Booking/BookingForm.jsx
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";

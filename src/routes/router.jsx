@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
-import Coverage from "../pages/Coverage/Coverage";
+// import Coverage from "../pages/Coverage/Coverage";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Login/Register/Register";
@@ -22,6 +22,8 @@ import AllProducts from "../pages/Products/AllProducts";
 import ProductDetails from "../pages/Products/ProductDetails";
 import BookingForm from "../pages/Booking/BookingForm";
 import MyOrders from "../pages/Dashboard/MyOrders";
+import TrackOrder from "../pages/Dashboard/TrackOrder";
+import Profile from "../pages/Dashboard/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -32,11 +34,11 @@ export const router = createBrowserRouter([
       { path: "all-products", Component: AllProducts },
       { path: "product/:productId", Component: ProductDetails },
       { path: "booking/:id", Component: BookingForm },
-      {
-        path: "/coverage",
-        Component: Coverage,
-        loader: () => fetch('/public/serviceCenters.json').then(res => res.json())
-      },
+      // {
+      //   path: "/coverage",
+      //   Component: Coverage,
+      //   loader: () => fetch('/public/serviceCenters.json').then(res => res.json())
+      // },
     ]
   },
   {
@@ -52,7 +54,9 @@ export const router = createBrowserRouter([
     element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
       { path: "/dashboard/my-orders", Component: MyOrders },
-      { path: "payment/:parcelId", Component: Payment },
+      // { path: "payment/:parcelId", Component: Payment },
+      { path: "/dashboard/track-order", Component: TrackOrder },
+      { path: "/dashboard/profile", Component: Profile },
       { path: "payment-history", Component: PaymentHistory },
       { path: "payment-success", Component: PaymentSuccess },
       { path: "payment-cancelled", Component: PaymentCancelled },
