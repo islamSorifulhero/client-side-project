@@ -10,13 +10,8 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
-// import ApproveRiders from "../pages/Dashboard/ApproveRiders/ApproveRiders";
-// import UsersManagement from "../pages/Dashboard/UsersManagement/UsersManagement";
 import AdminRoute from "./AdminRoute";
-// import AssignRiders from "../pages/Dashboard/AssignRiders/AssignRiders";
 import RiderRoute from "./RiderRoute";
-// import AssignedDeliveries from "../pages/Dashboard/AssignDeliveries/AssignedDeliveries";
-// import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 import AllProducts from "../pages/Products/AllProducts";
 import ProductDetails from "../pages/Products/ProductDetails";
 import BookingForm from "../pages/Booking/BookingForm";
@@ -59,15 +54,6 @@ export const router = createBrowserRouter([
         path: "booking/:id",
         element: <PrivateRoute><BookingForm></BookingForm></PrivateRoute>
       },
-
-      // rider-only
-      // { path: "assigned-deliveries", element: <RiderRoute><AssignedDeliveries /></RiderRoute> },
-      // { path: "completed-deliveries", element: <RiderRoute><CompletedDeliveries /></RiderRoute> },
-
-      // admin
-      // { path: "approve-riders", element: <AdminRoute><ApproveRiders /></AdminRoute> },
-      // { path: "assign-riders", element: <AdminRoute><AssignRiders /></AdminRoute> },
-      // { path: "users-management", element: <AdminRoute><UsersManagement /></AdminRoute> },
     ]
   }
 ]);
