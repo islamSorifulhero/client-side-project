@@ -7,10 +7,10 @@ import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Login/Register/Register";
 import PrivateRoute from "./PrivateRoute";
-import Rider from "../pages/Rider/Rider";
-import SendParcel from "../pages/sendParcel/SendParcel";
+// import Rider from "../pages/Rider/Rider";
+// import SendParcel from "../pages/sendParcel/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
-import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
+// import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
@@ -35,14 +35,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "all-products", Component: AllProducts },
-      { path: "product/:productId", Component: ProductDetails }, // product details
-      { path: "booking/:id", Component: BookingForm }, // booking form route
-      { path: "rider", element: <PrivateRoute><Rider /></PrivateRoute> },
-      {
-        path: "send-parcel",
-        element: <PrivateRoute><SendParcel /></PrivateRoute>,
-        loader: () => fetch('/serviceCenters.json').then(res => res.json())
-      },
+      { path: "product/:productId", Component: ProductDetails },
+      { path: "booking/:id", Component: BookingForm },
       {
         path: "/coverage",
         Component: Coverage,
@@ -63,7 +57,6 @@ export const router = createBrowserRouter([
     path: "dashboard",
     element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
-      { path: "my-parcels", Component: MyParcels },
       { path: "/dashboard/my-orders", Component: MyOrders },
       { path: "payment/:parcelId", Component: Payment },
       { path: "payment-history", Component: PaymentHistory },
