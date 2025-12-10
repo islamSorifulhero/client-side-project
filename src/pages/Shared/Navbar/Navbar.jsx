@@ -80,7 +80,7 @@ const Navbar = () => {
 
                 {user && (
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full border">
+                        <div className="w-14 h-10 rounded-full border">
                             <img
                                 src={user.photoURL || "/default-avatar.png"}
                                 className="w-full h-full object-cover rounded-full"

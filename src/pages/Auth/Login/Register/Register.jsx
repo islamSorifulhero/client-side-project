@@ -50,6 +50,7 @@ const Register = () => {
 
                                 axiosSecure.post('/users', userInfo)
                                     .then(res => {
+                                        console.log(res);
                                         if (res.data.insertedId) {
                                             toast.success('User registered successfully!');
                                             navigate(location.state?.from || '/login');

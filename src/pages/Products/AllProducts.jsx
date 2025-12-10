@@ -50,7 +50,7 @@ const AllProducts = () => {
                         key={product._id}
                         className="card shadow-lg rounded-xl"
                         initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, animate: 0 }}
+                        animate={{ opacity: 1, y: 0 }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.3 }}
@@ -96,7 +96,7 @@ const AllProducts = () => {
                     </motion.div>
                 )) : (
                     <p className="text-center text-gray-500 mt-10">
-                        No products available (API returned empty).
+                        No products available.
                     </p>
                 )}
             </div>

@@ -1,4 +1,3 @@
-// src/routes/router.jsx
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
@@ -7,10 +6,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Login/Register/Register";
 import PrivateRoute from "./PrivateRoute";
-// import Rider from "../pages/Rider/Rider";
-// import SendParcel from "../pages/sendParcel/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
-// import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
@@ -22,7 +18,6 @@ import AssignRiders from "../pages/Dashboard/AssignRiders/AssignRiders";
 import RiderRoute from "./RiderRoute";
 import AssignedDeliveries from "../pages/Dashboard/AssignDeliveries/AssignedDeliveries";
 import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
-import ParcelTrack from "../pages/ParcelTrack/ParcelTrack";
 import AllProducts from "../pages/Products/AllProducts";
 import ProductDetails from "../pages/Products/ProductDetails";
 import BookingForm from "../pages/Booking/BookingForm";
@@ -42,7 +37,6 @@ export const router = createBrowserRouter([
         Component: Coverage,
         loader: () => fetch('/public/serviceCenters.json').then(res => res.json())
       },
-      { path: "parcel-track/:trackingId", Component: ParcelTrack },
     ]
   },
   {
