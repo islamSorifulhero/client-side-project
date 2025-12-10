@@ -12,8 +12,6 @@ import NewsletterBanner from './sections/NewsletterBanner';
 const Home = () => {
     return (
         <div>
-            {/* 
-            <Brands></Brands> */}
             <Hero></Hero>
             <ProductCategories></ProductCategories>
             <FeaturedProducts></FeaturedProducts>

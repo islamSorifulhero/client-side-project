@@ -16,7 +16,7 @@ const Hero = () => {
                     className="flex-1 text-center lg:text-left"
                 >
                     <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                        Welcome to Our Product Shop
+                        Welcome to Our garments project
                     </h1>
 
                     <p className="mt-5 text-gray-600 max-w-lg">

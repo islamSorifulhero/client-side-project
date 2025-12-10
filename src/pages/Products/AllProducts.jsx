@@ -48,12 +48,12 @@ const AllProducts = () => {
                 {products.length > 0 ? products.map((product, index) => (
                     <motion.div
                         key={product._id}
-                        className="card bg-base-100 shadow-xl border overflow-hidden"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.97 }}
-                        transition={{ duration: 0.4, delay: index * 0.05 }}
+                        className="card shadow-lg rounded-xl"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, animate: 0 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.3 }}
                     >
                         <figure className="h-52 overflow-hidden">
                             <motion.img

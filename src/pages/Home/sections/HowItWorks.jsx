@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaCreditCard, FaShoppingCart } from "react-icons/fa";
 import { FaTruckFast } from "react-icons/fa6";
-// import { FaShoppingCart, FaCreditCard, FaTruckFast } from "react-icons/fa6";
 
 const steps = [
     {
