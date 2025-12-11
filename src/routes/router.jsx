@@ -96,8 +96,6 @@ export const router = createBrowserRouter([
       { path: "/dashboard/my-orders", Component: MyOrders },
       { path: "payment/:parcelId", Component: Payment },
       { path: "track-order", Component: TrackOrder },
-      { path: "payment-history", Component: PaymentHistory },
-
     ]
   }
 ]);
