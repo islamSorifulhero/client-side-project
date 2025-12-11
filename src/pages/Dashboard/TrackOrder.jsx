@@ -7,6 +7,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 const TrackOrder = () => {
     const { orderId } = useParams();
     const axiosSecure = useAxiosSecure();
+    console.log(axiosSecure);
 
     const { data: order, isLoading } = useQuery({
         queryKey: ["track-order", orderId],

@@ -1,23 +1,55 @@
 import { createBrowserRouter } from "react-router";
+
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
-import AuthLayout from "../layouts/AuthLayout";
+import AllProducts from "../pages/Products/AllProducts";
+import ProductDetails from "../pages/Products/ProductDetails";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Login/Register/Register";
-import PrivateRoute from "./PrivateRoute";
+
+// Dashboard Layout and pages
 import DashboardLayout from "../layouts/DashboardLayout";
+import MyOrders from "../pages/Dashboard/MyOrders";
+import Profile from "../pages/Dashboard/Profile";
+
+//        Admin pages
+//1. usersManagement
+//2. manageUsers
+//3. AllOrders
+
+
+
+//       Buyer pages
+// 1. Buyer order/ MyOrders
+// 2. TrackOrder
+
+
+//          Manager pages
+// 1. AddProduct
+// 2. manageProduction
+// 3. UpdateProduct
+// 4. PendingOrders
+// 5. ApprovedOrders
+
+
+//         private role protected route
+import PrivateRoute from "./PrivateRoute";
+// 2. AdminRoute
+// 3. managerRoute
+// 4. BuyerRoute
+
+
+import AuthLayout from "../layouts/AuthLayout";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
-import AdminRoute from "./AdminRoute";
-import RiderRoute from "./RiderRoute";
-import AllProducts from "../pages/Products/AllProducts";
-import ProductDetails from "../pages/Products/ProductDetails";
 import BookingForm from "../pages/Booking/BookingForm";
-import MyOrders from "../pages/Dashboard/MyOrders";
 import TrackOrder from "../pages/Dashboard/TrackOrder";
-import Profile from "../pages/Dashboard/Profile";
+import BuyerRoute from "./BuyerRoute";
+
 
 export const router = createBrowserRouter([
   {
@@ -26,10 +58,22 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "all-products", Component: AllProducts },
-      { path: "product/:productId", Component: ProductDetails },
+      { path: "about", Component: AboutUs },
+      { path: "contact", Component: Contact },
       { path: "booking/:id", Component: BookingForm },
+
+      {
+        path: "product/:productId",
+        element: <PrivateRoute><ProductDetails></ProductDetails></PrivateRoute>
+      },
+      {
+        path: "booking/:id",
+        element: <PrivateRoute><BookingForm></BookingForm></PrivateRoute>
+      },
     ]
   },
+
+
   {
     path: "/",
     Component: AuthLayout,
@@ -38,22 +82,22 @@ export const router = createBrowserRouter([
       { path: "register", Component: Register }
     ]
   },
+
+
   {
-    path: "dashboard",
+    path: "/dashboard",
     element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
+      { path: "/dashboard/profile", Component: Profile },
+      { path: "payment-success", element: <PrivateRoute><PaymentSuccess></PaymentSuccess></PrivateRoute> },
+      { path: "payment-cancelled", element: <PrivateRoute><PaymentCancelled></PaymentCancelled></PrivateRoute> },
+      { path: "payment-history", element: <BuyerRoute><PaymentHistory></PaymentHistory></BuyerRoute> },
+
       { path: "/dashboard/my-orders", Component: MyOrders },
       { path: "payment/:parcelId", Component: Payment },
-      { path: "/dashboard/track-order", Component: TrackOrder },
-      { path: "/dashboard/profile", Component: Profile },
+      { path: "track-order", Component: TrackOrder },
       { path: "payment-history", Component: PaymentHistory },
-      { path: "payment-success", Component: PaymentSuccess },
-      { path: "payment-cancelled", Component: PaymentCancelled },
 
-      {
-        path: "booking/:id",
-        element: <PrivateRoute><BookingForm></BookingForm></PrivateRoute>
-      },
     ]
   }
 ]);
