@@ -11,10 +11,11 @@ const ManageProducts = () => {
     const { data: products = [], isLoading } = useQuery({
         queryKey: ["manager-products"],
         queryFn: async () => {
-            const res = await axiosSecure.get("/products/manager");
+            const res = await axiosSecure.get("/manager/get-manager");
             return res.data;
         },
     });
+    console.log(products);
 
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this product?")) return;
@@ -50,7 +51,7 @@ const ManageProducts = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map((p, i) => (
+                        {products?.map((p, i) => (
                             <tr key={p._id}>
                                 <th>{i + 1}</th>
                                 <td><img src={p.images?.[0] || ""} alt="" className="w-16 h-16 object-cover rounded" /></td>
