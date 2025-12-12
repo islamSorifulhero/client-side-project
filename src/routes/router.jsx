@@ -14,32 +14,9 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MyOrders from "../pages/Dashboard/MyOrders";
 import Profile from "../pages/Dashboard/Profile";
 
-//        Admin pages
-//1. usersManagement
-//2. manageUsers
-//3. AllOrders
-
-
-
-//       Buyer pages
-// 1. Buyer order/ MyOrders
-// 2. TrackOrder
-
-
-//          Manager pages
-// 1. AddProduct
-// 2. manageProduction
-// 3. UpdateProduct
-// 4. PendingOrders
-// 5. ApprovedOrders
-
 
 //         private role protected route
 import PrivateRoute from "./PrivateRoute";
-// 2. AdminRoute
-// 3. managerRoute
-// 4. BuyerRoute
-
 
 import AuthLayout from "../layouts/AuthLayout";
 import Payment from "../pages/Dashboard/Payment/Payment";

@@ -2,31 +2,35 @@ import React from "react";
 
 const AboutUs = () => {
     return (
-        <div className="max-w-6xl mx-auto px-6 py-10">
-            <h1 className="text-3xl font-bold mb-6 text-center">About Us</h1>
-
-            <div className="space-y-4 text-lg leading-relaxed">
+        <div className="max-w-5xl mx-auto p-6 space-y-6">
+            <h1 className="text-3xl font-bold mb-4">About Us</h1>
+            <p className="text-base leading-7">
+                Our Garments Order & Production Tracker System is designed to simplify and
+                streamline the workflow between buyers, managers, and admins. We focus on
+                transparency, efficiency, and real‑time updates so that everyone involved
+                in the production pipeline can stay informed.
+            </p>
+            <p className="text-base leading-7">
+                With our system, users can browse products, place orders, track booking
+                status, and manage production progress seamlessly. Our mission is to
+                provide a modern digital solution for garment industry tracking, ensuring
+                better communication and faster decision‑making.
+            </p>
+            <div className="p-4 border rounded-2xl shadow">
+                <h2 className="text-xl font-semibold mb-2">Our Vision</h2>
                 <p>
-                    আমরা একটি আধুনিক Garments Order & Production Tracking System,
-                    যেখানে Buyer, Manager এবং Admin একই প্ল্যাটফর্মে পোশাকের order, production
-                    status ও payment ম্যানেজ করতে পারে।
+                    To revolutionize the garment production workflow by offering a smart,
+                    intuitive, and scalable digital platform that improves productivity.
                 </p>
-
-                <p>
-                    আমাদের লক্ষ্য হলো garments industry-তে একটি স্মার্ট, দ্রুত ও স্বচ্ছ
-                    অর্ডার ম্যানেজমেন্ট সিস্টেম তৈরি করা, যেখানে অর্ডারের প্রতিটি ধাপ সহজে
-                    ট্র্যাক করা যায়।
-                </p>
-
-                <p>
-                    এই সিস্টেমের মাধ্যমে Buyer তার order দেখতে পারে, Manager production update দিতে পারে,
-                    আর Admin পুরো system control করে।
-                </p>
-
-                <p>
-                    আধুনিক UI, fully secure API এবং real-time dashboard মিলিয়ে এটি একটি
-                    complete garments management solution।
-                </p>
+            </div>
+            <div className="p-4 border rounded-2xl shadow">
+                <h2 className="text-xl font-semibold mb-2">Our Values</h2>
+                <ul className="list-disc ml-6 space-y-1">
+                    <li>Transparency in order processing</li>
+                    <li>Reliable and real‑time tracking</li>
+                    <li>User‑friendly experience</li>
+                    <li>Commitment to quality and accuracy</li>
+                </ul>
             </div>
         </div>
     );
