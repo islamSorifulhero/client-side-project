@@ -37,7 +37,6 @@ export const router = createBrowserRouter([
       { path: "all-products", Component: AllProducts },
       { path: "about", Component: AboutUs },
       { path: "contact", Component: Contact },
-      { path: "booking/:id", Component: BookingForm },
 
       {
         path: "product/:productId",
@@ -65,13 +64,16 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
-      { path: "/dashboard/profile", Component: Profile },
+      { path: "profile", Component: Profile },
+      { path: "my-orders", Component: MyOrders },
+
+
+      { path: "payment/:parcelId", Component: Payment },
       { path: "payment-success", element: <PrivateRoute><PaymentSuccess></PaymentSuccess></PrivateRoute> },
       { path: "payment-cancelled", element: <PrivateRoute><PaymentCancelled></PaymentCancelled></PrivateRoute> },
       { path: "payment-history", element: <BuyerRoute><PaymentHistory></PaymentHistory></BuyerRoute> },
+      
 
-      { path: "/dashboard/my-orders", Component: MyOrders },
-      { path: "payment/:parcelId", Component: Payment },
       { path: "track-order", Component: TrackOrder },
     ]
   }
