@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 
 const BookingForm = () => {
-  const { id } = useParams(); // Product ID
+  const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -15,7 +15,7 @@ const BookingForm = () => {
   const [cost, setCost] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // 1. Load Product Data
+  const [paymentOption, setPaymentOption] = useState("COD");
   useEffect(() => {
     if (!id) {
       setLoading(false);
@@ -32,21 +32,22 @@ const BookingForm = () => {
           return;
         }
         setProduct(p);
-        // Calculate initial quantity based on product limits
+
         const min = p.minimumOrder ?? p.minOrder ?? 1;
         const available = p.availableQty ?? p.quantity ?? 0;
         const initialQty = Math.min(Math.max(min, 1), available || min);
         setQty(initialQty);
         setCost((p.price || 0) * initialQty);
+
+        setLoading(false);
       })
       .catch(err => {
         console.error("Product load error:", err);
         toast.error("Failed to load product.");
-      })
-      .finally(() => setLoading(false));
+        setLoading(false);
+      });
   }, [id, axiosSecure]);
 
-  // 2. Handle Quantity Change
   const handleQtyChange = (value) => {
     if (!product) return;
     let validatedValue = parseInt(value || 0);
@@ -66,7 +67,6 @@ const BookingForm = () => {
     setCost((product.price || 0) * validatedValue);
   };
 
-  // 3. Handle Form Submission (Place Order)
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     if (!user) {
@@ -78,6 +78,8 @@ const BookingForm = () => {
       return;
     }
 
+    const isOnlinePayment = paymentOption === "Stripe" || paymentOption === "PayFast";
+
     const form = new FormData(e.target);
     const bookingData = {
       productId: product._id,
@@ -87,7 +89,8 @@ const BookingForm = () => {
       orderQty: qty,
       orderPrice: cost,
 
-      // Form Fields
+      paymentOption: paymentOption,
+
       firstName: form.get("firstName"),
       lastName: form.get("lastName"),
       phone: form.get("phone"),
@@ -95,12 +98,10 @@ const BookingForm = () => {
       notes: form.get("notes"),
 
       userEmail: user.email,
-      paymentRequired: product.paymentRequired || (product.paymentOption === "online"),
       createdAt: new Date()
     };
 
     try {
-      // POST request to Server (Server checked for 404 in Section 1)
       const { data } = await axiosSecure.post("/bookings", bookingData);
 
       if (!data.insertedId) {
@@ -108,10 +109,7 @@ const BookingForm = () => {
         return;
       }
 
-      toast.success("Booking created!");
-
-      if (bookingData.paymentRequired) {
-        // Payment requires further steps (Stripe checkout)
+      if (isOnlinePayment) {
         const payRes = await axiosSecure.post("/create-checkout-session", {
           cost,
           bookingId: data.insertedId,
@@ -119,12 +117,11 @@ const BookingForm = () => {
           userEmail: user.email
         });
 
-        // Redirect to payment gateway
-        window.location.href = payRes.data.url;
+        window.location.replace(payRes.data.url);
         return;
       }
 
-      // COD / No payment required
+      toast.success("Order placed successfully (COD)!");
       navigate("/dashboard/my-orders");
     } catch (err) {
       console.error("Place order error:", err.response?.data || err.message);
@@ -138,12 +135,14 @@ const BookingForm = () => {
   const min = product.minimumOrder ?? product.minOrder ?? 1;
   const available = product.availableQty ?? product.quantity ?? 0;
 
+  const buttonText = paymentOption === "COD" ? "Place Order (COD)" : "Proceed to Payment";
+
+
   return (
     <div className="max-w-3xl mx-auto p-5">
       <h2 className="text-2xl font-bold mb-4">Confirm Order: {product.name}</h2>
 
       <form onSubmit={handlePlaceOrder} className="space-y-4 bg-white p-6 rounded-lg shadow">
-        {/* --- Read-Only Fields --- */}
         <div>
           <label className="font-semibold">Email</label>
           <input type="email" value={user?.email || "N/A"} readOnly className="input input-bordered w-full bg-gray-100" />
@@ -157,7 +156,6 @@ const BookingForm = () => {
           <input type="text" value={`$${product.price}`} readOnly className="input input-bordered w-full bg-gray-100" />
         </div>
 
-        {/* --- Quantity Input --- */}
         <div>
           <label className="font-semibold">Order Quantity</label>
           <input
@@ -172,13 +170,11 @@ const BookingForm = () => {
           <p className="text-sm text-gray-500">Min: {min} {available ? `| Available: ${available}` : ""}</p>
         </div>
 
-        {/* --- Total Price --- */}
         <div>
           <label className="font-semibold">Total Price</label>
           <input type="text" value={`$${cost.toFixed(2)}`} readOnly className="input input-bordered w-full bg-gray-100" />
         </div>
 
-        {/* --- Delivery Fields --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="font-semibold">First Name</label>
@@ -201,12 +197,26 @@ const BookingForm = () => {
         </div>
 
         <div>
+          <label className="font-semibold">Payment Options</label>
+          <select
+            value={paymentOption}
+            onChange={(e) => setPaymentOption(e.target.value)}
+            className="select select-bordered w-full"
+            required
+          >
+            <option value="COD">Cash on Delivery (COD)</option>
+            <option value="Stripe">Online Payment (Stripe)</option>
+          </select>
+        </div>
+
+
+        <div>
           <label className="font-semibold">Additional Notes</label>
           <textarea name="notes" className="textarea textarea-bordered w-full"></textarea>
         </div>
 
         <button type="submit" className="btn btn-primary w-full mt-3 text-white">
-          {product.paymentRequired || product.paymentOption === "online" ? "Proceed to Payment" : "Place Order (COD)"}
+          {buttonText}
         </button>
       </form>
     </div>
