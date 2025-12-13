@@ -6,9 +6,8 @@ import { Link } from 'react-router';
 const Logo = () => {
     return (
         <Link to="/">
-            <div className='flex items-center'>
+            <div className='flex items-center p-2 rounded-lg transition duration-300 hover:bg-gray-500'>
                 <img className='w-30 h-20' src={logo} alt="" />
-                {/* <h3 className="text-xl font-bold">Garments</h3> */}
             </div>
         </Link>
     );
