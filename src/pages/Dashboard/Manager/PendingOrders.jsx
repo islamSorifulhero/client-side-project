@@ -1,4 +1,3 @@
-// src/pages/Dashboard/Manager/PendingOrders.jsx
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -11,8 +10,8 @@ const PendingOrders = () => {
     const { data: orders = [], isLoading } = useQuery({
         queryKey: ["pending-orders"],
         queryFn: async () => {
-            const res = await axiosSecure.get("/bookings?status=pending");
-            return res.data;
+            const res = await axiosSecure.get("/bookings/admin?status=pending");
+            return res.data.bookings;
         },
     });
 
