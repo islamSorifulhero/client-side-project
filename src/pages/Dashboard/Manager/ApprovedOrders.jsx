@@ -1,4 +1,3 @@
-// src/pages/Dashboard/Manager/ApprovedOrders.jsx
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -11,8 +10,8 @@ const ApprovedOrders = () => {
     const { data: orders = [], isLoading } = useQuery({
         queryKey: ["approved-orders"],
         queryFn: async () => {
-            const res = await axiosSecure.get("/bookings?status=approved");
-            return res.data;
+            const res = await axiosSecure.get("/bookings/admin?status=approved");
+            return res.data.bookings;
         },
     });
 
