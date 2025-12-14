@@ -16,7 +16,7 @@ const AllProducts = () => {
 
     const handleToggleHome = async (productId, currentState) => {
         try {
-            await axiosSecure.patch(`/products/${productId}`, { showOnHome: !currentState });
+            await axiosSecure.patch(`/products/${productId}/toggle-home`, { showOnHome: !currentState });
             toast.success("Updated show on home status!");
             refetch();
         } catch (err) {

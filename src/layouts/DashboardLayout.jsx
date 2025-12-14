@@ -130,8 +130,8 @@ const DashboardLayout = () => {
                                 </li>
 
                                 <li>
-                                    <NavLink to="/dashboard/all-products" className="flex gap-2">
-                                        <FaBoxOpen /> All Products
+                                    <NavLink to="/dashboard/get-all-products" className="flex gap-2">
+                                        <FaBoxOpen />All Products
                                     </NavLink>
                                 </li>
 

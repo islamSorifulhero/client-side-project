@@ -31,6 +31,8 @@ import ApprovedOrders from "../pages/Dashboard/Manager/ApprovedOrders";
 import AdminRoute from "./AdminRoute";
 import UsersManagement from "../pages/Dashboard/UsersManagement/UsersManagement";
 import AllOrders from "../pages/Dashboard/Admin/AllOrders";
+import GetAllProducts from "../pages/Dashboard/Admin/GetAllProducts";
+import EditProduct from "../pages/Dashboard/EditProduct";
 
 
 export const router = createBrowserRouter([
@@ -96,8 +98,12 @@ export const router = createBrowserRouter([
         element: <AdminRoute><UsersManagement></UsersManagement></AdminRoute>
       },
       {
-        path: "all-products",
-        element: <AdminRoute><AllProducts></AllProducts></AdminRoute>
+        path: "get-all-products",
+        element: <AdminRoute><GetAllProducts></GetAllProducts></AdminRoute>
+      },
+      {
+        path: "edit-product/:id",
+        element: <AdminRoute><EditProduct></EditProduct></AdminRoute>
       },
       {
         path: "all-orders",
