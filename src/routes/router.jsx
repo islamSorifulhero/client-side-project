@@ -33,6 +33,7 @@ import UsersManagement from "../pages/Dashboard/UsersManagement/UsersManagement"
 import AllOrders from "../pages/Dashboard/Admin/AllOrders";
 import GetAllProducts from "../pages/Dashboard/Admin/GetAllProducts";
 import EditProduct from "../pages/Dashboard/EditProduct";
+import OrderDetails from "../pages/Dashboard/Admin/OrderDetails";
 
 
 export const router = createBrowserRouter([
@@ -108,6 +109,10 @@ export const router = createBrowserRouter([
       {
         path: "all-orders",
         element: <AdminRoute><AllOrders></AllOrders></AdminRoute>
+      },
+      {
+        path: "order-details/:id",
+        element: <AdminRoute><OrderDetails></OrderDetails></AdminRoute>
       },
 
 
