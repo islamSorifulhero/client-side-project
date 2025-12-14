@@ -28,6 +28,9 @@ import AddProduct from "../pages/Dashboard/AddProduct";
 import ManageProducts from "../pages/Dashboard/Manager/ManageProducts";
 import PendingOrders from "../pages/Dashboard/Manager/PendingOrders";
 import ApprovedOrders from "../pages/Dashboard/Manager/ApprovedOrders";
+import AdminRoute from "./AdminRoute";
+import UsersManagement from "../pages/Dashboard/UsersManagement/UsersManagement";
+import AllOrders from "../pages/Dashboard/Admin/AllOrders";
 
 
 export const router = createBrowserRouter([
@@ -84,6 +87,21 @@ export const router = createBrowserRouter([
       {
         path: "approved-orders",
         Component: ApprovedOrders,
+      },
+
+      // admin-users
+
+      {
+        path: "manage-users",
+        element: <AdminRoute><UsersManagement></UsersManagement></AdminRoute>
+      },
+      {
+        path: "all-products",
+        element: <AdminRoute><AllProducts></AllProducts></AdminRoute>
+      },
+      {
+        path: "all-orders",
+        element: <AdminRoute><AllOrders></AllOrders></AdminRoute>
       },
 
 
