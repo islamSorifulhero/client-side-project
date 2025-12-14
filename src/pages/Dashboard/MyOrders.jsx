@@ -1,9 +1,9 @@
-// src/pages/Dashboard/MyOrders.jsx
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import { Link } from "react-router";
 
 const MyOrders = () => {
     const { user } = useAuth();
@@ -40,25 +40,33 @@ const MyOrders = () => {
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Order ID</th>
                             <th>Product</th>
-                            <th>Qty</th>
-                            <th>Price</th>
-                            <th>Tracking</th>
+                            <th>Quantity</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th>Payment</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {bookings.map((b, i) => (
                             <tr key={b._id}>
                                 <th>{i + 1}</th>
+                                <th>{b._id}</th>
                                 <td>{b.productTitle}</td>
                                 <td>{b.orderQty}</td>
-                                <td>${b.orderPrice}</td>
-                                <td>{b.trackingId || "—"}</td>
                                 <td>{b.status || b.paymentStatus || "Pending"}</td>
+                                <td>{b.paymentMethod || "COD/Unpaid"}</td>
                                 <td>
-                                    {b.status === "Pending" && (
+                                    <Link
+                                        to={`/dashboard/track-order/${b._id}`}
+                                        className="btn btn-sm btn-info text-white mr-2"
+                                    >
+                                        View
+                                    </Link>
+                                </td>
+                                <td>
+                                    {b.status === "pending" && (
                                         <button
                                             onClick={() => handleCancel(b._id)}
                                             className="btn btn-sm btn-error"

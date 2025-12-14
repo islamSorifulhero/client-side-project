@@ -34,6 +34,7 @@ import AllOrders from "../pages/Dashboard/Admin/AllOrders";
 import GetAllProducts from "../pages/Dashboard/Admin/GetAllProducts";
 import EditProduct from "../pages/Dashboard/EditProduct";
 import OrderDetails from "../pages/Dashboard/Admin/OrderDetails";
+import TrackingOrder from "../pages/Dashboard/TrackingOrder";
 
 
 export const router = createBrowserRouter([
@@ -74,6 +75,7 @@ export const router = createBrowserRouter([
     children: [
       { path: "profile", Component: Profile },
       { path: "my-orders", Component: MyOrders },
+      { path: "track-order/:id", Component: TrackingOrder },
 
       {
         path: "add-product",
