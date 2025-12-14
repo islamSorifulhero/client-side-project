@@ -2,10 +2,12 @@ import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const PendingOrders = () => {
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const { data: orders = [], isLoading } = useQuery({
         queryKey: ["pending-orders"],
@@ -43,7 +45,18 @@ const PendingOrders = () => {
         }
     };
 
+    const handleViewDetails = (orderId) => {
+        navigate(`/dashboard/order-details/${orderId}`);
+    };
+
     if (isLoading) return <p className="py-8 text-center">Loading...</p>;
+
+    if (orders.length === 0) return (
+        <div className="py-10 text-center bg-green-50 rounded-lg shadow-inner">
+            <h3 className="text-2xl font-semibold text-green-700">🎉 No Pending Orders Found!</h3>
+            <p className="text-gray-600 mt-2">All current orders have been reviewed.</p>
+        </div>
+    );
 
     return (
         <div className="max-w-7xl mx-auto p-6">
@@ -72,6 +85,8 @@ const PendingOrders = () => {
                                 <td className="flex gap-2">
                                     <button onClick={() => handleApprove(o._id)} className="btn btn-sm btn-success">Approve</button>
                                     <button onClick={() => handleReject(o._id)} className="btn btn-sm btn-error">Reject</button>
+                                    <button onClick={() => handleViewDetails(o._id)} className="btn btn-sm btn-info text-white"> View
+                                    </button>
                                 </td>
                             </tr>
                         ))}
