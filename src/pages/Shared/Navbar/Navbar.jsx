@@ -43,15 +43,12 @@ const Navbar = () => {
                         </svg>
                     </div>
 
-                    {/* Mobile Dropdown Menu Content */}
                     <ul tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 
                         rounded-box z-[1] mt-3 w-52 p-2 shadow">
 
-                        {/* Base Menu Items */}
                         {baseMenu}
 
-                        {/* Mobile: Conditional Links */}
                         {!user ? (
                             <>
                                 {guestMenuLinks}
@@ -69,7 +66,6 @@ const Navbar = () => {
                 </Link>
             </div>
 
-            {/* 2. CENTER: Desktop Main Menu */}
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
                     {baseMenu}
@@ -104,8 +100,6 @@ const Navbar = () => {
                     </div>
                 )}
 
-
-                {/* Mobile/Avatar Dropdown */}
                 {user && (
                     <div className="dropdown dropdown-end ml-2">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -119,7 +113,6 @@ const Navbar = () => {
                             </div>
                         </div>
 
-                        {/* Avatar Dropdown Menu (Dashboard and Logout) */}
                         <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                             <li><Link to="/dashboard">Dashboard</Link></li>
                             <li><button onClick={handleLogOut}>Log Out</button></li>
