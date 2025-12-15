@@ -76,7 +76,6 @@ const UpdateProduct = () => {
 
             <form onSubmit={handleSubmit} className="space-y-6">
 
-                {/* 1. Name */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text font-semibold">Product Name</span>
@@ -92,7 +91,6 @@ const UpdateProduct = () => {
                     />
                 </div>
 
-                {/* 2. Price */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text font-semibold">Price (USD)</span>
@@ -109,7 +107,6 @@ const UpdateProduct = () => {
                     />
                 </div>
 
-                {/* 3. Description */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text font-semibold">Description</span>
@@ -124,7 +121,6 @@ const UpdateProduct = () => {
                     />
                 </div>
 
-                {/* 4. Category (Dropdown) */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text font-semibold">Category</span>
@@ -142,7 +138,6 @@ const UpdateProduct = () => {
                     </select>
                 </div>
 
-                {/* 5. Payment Option (Dropdown) */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text font-semibold">Payment Option</span>
@@ -160,7 +155,6 @@ const UpdateProduct = () => {
                     </select>
                 </div>
 
-                {/* 6. Show on Home Checkbox */}
                 <div className="form-control">
                     <label className="label cursor-pointer justify-start space-x-3">
                         <input

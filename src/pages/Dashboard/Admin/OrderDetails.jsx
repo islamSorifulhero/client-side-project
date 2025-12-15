@@ -41,7 +41,7 @@ const OrderDetails = () => {
             axiosSecure.patch(`/bookings/${id}/tracking`, updatePayload),
         onSuccess: () => {
             toast.success(`Tracking updated to ${statusUpdate.toUpperCase()}`);
-            queryClient.invalidateQueries(["order-details", id]); // ডেটা রি-ফেচ
+            queryClient.invalidateQueries(["order-details", id]);
             setStatusUpdate('');
             setNote('');
             setLocation('');
