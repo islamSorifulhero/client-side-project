@@ -35,6 +35,7 @@ import GetAllProducts from "../pages/Dashboard/Admin/GetAllProducts";
 import EditProduct from "../pages/Dashboard/EditProduct";
 import OrderDetails from "../pages/Dashboard/Admin/OrderDetails";
 import TrackingOrder from "../pages/Dashboard/TrackingOrder";
+import UpdateProduct from "../pages/Dashboard/Manager/UpdateProduct";
 
 
 export const router = createBrowserRouter([
@@ -92,6 +93,10 @@ export const router = createBrowserRouter([
       {
         path: "approved-orders",
         Component: ApprovedOrders,
+      },
+      {
+        path: "/dashboard/update-product/:id",
+        Component: UpdateProduct,
       },
 
       // admin-users
