@@ -1,9 +1,7 @@
-// src/routes/ManagerRoute.jsx
 import React from 'react';
 import useAuth from '../hooks/useAuth';
 import Loading from '../components/Loading/Loading';
 import useRole from '../hooks/useRole';
-// import Forbidden from '../components/Forbidden/Forbidden';
 import { Navigate, useLocation } from 'react-router';
 import Forbidden from '../Forbidden/Forbidden';
 
@@ -20,7 +18,6 @@ const ManagerRoute = ({ children }) => {
         return <Navigate state={location.pathname} to="/login" />;
     }
 
-    // Role check: Only allow 'manager' role
     if (role !== 'manager') {
         return <Forbidden />;
     }

@@ -1,4 +1,3 @@
-// src/pages/Dashboard/Profile.jsx
 import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -42,13 +41,10 @@ const Profile = () => {
     return (
         <div className="max-w-3xl mx-auto p-6">
 
-            {/* Header */}
             <h2 className="text-3xl font-bold mb-8 text-center">My Profile</h2>
 
-            {/* Profile Card */}
             <div className="bg-white shadow-xl rounded-2xl p-8 border border-gray-200">
 
-                {/* User Image */}
                 <div className="flex justify-center mb-6">
                     <div className="relative group">
                         <img
@@ -57,12 +53,10 @@ const Profile = () => {
                             className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg group-hover:scale-105 transition-transform duration-300"
                         />
 
-                        {/* glowing ring */}
                         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 opacity-30 -z-10 blur-xl"></div>
                     </div>
                 </div>
 
-                {/* User Info */}
                 <div className="space-y-4 text-center">
 
                     <div>
@@ -99,7 +93,6 @@ const Profile = () => {
                         </span>
                     </div>
 
-                    {/* Suspend Feedback */}
                     {profileData.suspendFeedback && (
                         <div>
                             <p className="text-red-600 font-semibold">Suspend Feedback</p>
@@ -109,7 +102,6 @@ const Profile = () => {
                         </div>
                     )}
 
-                    {/* Logout Button */}
                     <button
                         onClick={handleLogout}
                         className="mt-6 w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl shadow hover:opacity-90 transition"

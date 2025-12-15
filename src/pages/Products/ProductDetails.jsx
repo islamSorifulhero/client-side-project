@@ -17,8 +17,6 @@ const ProductDetails = () => {
 
     useEffect(() => {
         setLoading(true);
-        // Note: '/products/:id' is a public route, use useAxiosPublic if available
-        // Using axiosSecure here, assuming backend handles public access
         axiosSecure.get(`/products/${productId}`) 
             .then(res => {
                 setProduct(res.data);
@@ -45,7 +43,6 @@ const ProductDetails = () => {
         >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
-                {/* --- Product Images/Media --- */}
                 <div className="space-y-4">
                     {product.images?.length > 0 ? (
                         product.images.map((img, index) => (
@@ -72,7 +69,6 @@ const ProductDetails = () => {
                     )}
                 </div>
 
-                {/* --- Product Info & Booking Action --- */}
                 <div className="space-y-6">
                     <h1 className="text-3xl font-bold">{product.name}</h1>
                     <p className="text-gray-600">{product.description}</p>

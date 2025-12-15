@@ -3,7 +3,6 @@ import useAuth from '../hooks/useAuth';
 import Loading from '../components/Loading/Loading';
 import useRole from '../hooks/useRole';
 import Forbidden from '../Forbidden/Forbidden';
-// import Forbidden from '../components/Forbidden/Forbidden';
 
 const AdminRoute = ({ children }) => {
     const { loading } = useAuth();
