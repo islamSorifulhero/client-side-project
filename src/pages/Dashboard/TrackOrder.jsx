@@ -1,4 +1,3 @@
-// src/pages/Dashboard/TrackOrder.jsx
 import React from "react";
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -12,7 +11,7 @@ const TrackOrder = () => {
     const { data: order, isLoading } = useQuery({
         queryKey: ["track-order", orderId],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/bookings/${orderId}`);
+            const res = await axiosSecure.get(`/get-booking/${orderId}`);
             return res.data;
         },
         enabled: !!orderId
