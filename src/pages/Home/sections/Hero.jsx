@@ -24,7 +24,7 @@ const Hero = () => {
                         Shop now and enjoy fast delivery to anywhere you want!
                     </p>
 
-                    <Link to="/all-products" className="btn btn-primary mt-6">
+                    <Link to="/all-products" className="btn btn-primary mt-6 animate__animated animate__pulse animate__infinite">
                         Explore Products
                     </Link>
                 </motion.div>

@@ -31,7 +31,7 @@ const ProductCategories = () => {
                             />
                         </figure>
                         <div className="card-body text-center">
-                            <h2 className="text-xl font-semibold">{c.name}</h2>
+                            <h2 className="text-xl font-semibold animate__animated animate__pulse animate__infinite">{c.name}</h2>
                         </div>
                     </motion.div>
                 ))}

@@ -19,7 +19,7 @@ const ContactCTA = () => {
                 Our support team is ready to assist you anytime.
             </p>
 
-            <Link to="/contact" className="btn bg-white text-primary border-none">
+            <Link to="/contact" className="btn bg-white text-primary border-none animate__animated animate__pulse animate__infinite">
                 Contact Us
             </Link>
         </motion.div>

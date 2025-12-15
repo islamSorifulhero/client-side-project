@@ -29,7 +29,7 @@ const Navbar = () => {
     );
 
     return (
-        <div className="navbar bg-base-100 shadow-sm sticky top-0 z-50">
+        <div className="navbar bg-base-100 font-bold shadow-sm sticky top-0 z-50 bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 ...">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -82,7 +82,7 @@ const Navbar = () => {
                 >
                     {Theme === 'dark'
                         ? <FaSun className="w-6 h-6 text-yellow-400" />
-                        : <FaMoon className="w-6 h-6 text-gray-700" />
+                        : <FaMoon className="w-6 h-6 text-red-700" />
                     }
                 </button>
 

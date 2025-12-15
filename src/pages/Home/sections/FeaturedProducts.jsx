@@ -62,7 +62,7 @@ const FeaturedProducts = () => {
             </div>
 
             <div className="text-center mt-8">
-                <Link to="/all-products" className="btn btn-outline">
+                <Link to="/all-products" className="btn btn-outline animate__animated animate__pulse animate__infinite">
                     View All Products
                 </Link>
             </div>
