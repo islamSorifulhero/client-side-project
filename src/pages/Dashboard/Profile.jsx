@@ -35,7 +35,13 @@ const Profile = () => {
         }
     };
 
-    if (loading) return <p className="text-center py-8">Loading profile...</p>;
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-40 w-full my-10">
+                <span className="loading loading-bars loading-lg text-primary"></span>
+            </div>
+        );
+    }
     if (!profileData) return <p className="text-center py-8">No profile data found.</p>;
 
     return (

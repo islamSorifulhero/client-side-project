@@ -49,7 +49,13 @@ const PendingOrders = () => {
         navigate(`/dashboard/order-details/${orderId}`);
     };
 
-    if (isLoading) return <p className="py-8 text-center">Loading...</p>;
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-40 w-full my-10">
+                <span className="loading loading-bars loading-lg text-primary"></span>
+            </div>
+        );
+    }
 
     if (orders.length === 0) return (
         <div className="py-10 text-center bg-green-50 rounded-lg shadow-inner">

@@ -15,7 +15,13 @@ const FeaturedProducts = () => {
         },
     });
 
-    if (isLoading) return <p className="text-center">Loading...</p>;
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-40 w-full my-10">
+                <span className="loading loading-bars loading-lg text-primary"></span>
+            </div>
+        );
+    }
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-12">

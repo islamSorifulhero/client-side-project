@@ -24,7 +24,7 @@ const AllProducts = () => {
     if (loading) {
         return (
             <div className="h-[70vh] flex items-center justify-center">
-                <span className="loading loading-spinner loading-lg"></span>
+                <span className="loading loading-bars loading-xl"></span>
             </div>
         );
     }
