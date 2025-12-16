@@ -27,7 +27,7 @@ const MyOrders = () => {
     const currentOrders = orders.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
     const handleView = (orderId) => {
-        navigate(`/dashboard/order-details/${orderId}`);
+        navigate(`/dashboard/track-order/${orderId}`);
     };
 
     const handleCancel = (id) => {

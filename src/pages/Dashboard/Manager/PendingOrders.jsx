@@ -46,7 +46,7 @@ const PendingOrders = () => {
     };
 
     const handleViewDetails = (orderId) => {
-        navigate(`/dashboard/order-details/${orderId}`);
+        navigate(`/dashboard/track-order/${orderId}`);
     };
 
     if (isLoading) {
