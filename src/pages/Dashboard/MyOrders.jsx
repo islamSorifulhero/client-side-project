@@ -48,7 +48,11 @@ const MyOrders = () => {
     };
 
     if (isLoading) {
-        return <p className="text-center py-10">Loading...</p>;
+        return (
+            <div className="flex justify-center items-center h-40 w-full my-10">
+                <span className="loading loading-bars loading-lg text-primary"></span>
+            </div>
+        );
     }
 
     return (
@@ -85,10 +89,10 @@ const MyOrders = () => {
                                     <td className="text-center">{order.orderQty}</td>
                                     <td className="text-center capitalize">
                                         <span className={`badge ${order.status === "pending"
-                                                ? "badge-warning"
-                                                : order.status === "paid"
-                                                    ? "badge-success"
-                                                    : "badge-info"
+                                            ? "badge-warning"
+                                            : order.status === "paid"
+                                                ? "badge-success"
+                                                : "badge-info"
                                             } text-white`}>
                                             {order.status}
                                         </span>

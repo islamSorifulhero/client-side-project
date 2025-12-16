@@ -69,7 +69,13 @@ const GetAllProducts = () => {
         });
     };
 
-    if (isLoading) return <p className="py-8 text-center">Loading...</p>;
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-40 w-full my-10">
+                <span className="loading loading-bars loading-lg text-primary"></span>
+            </div>
+        );
+    }
 
     return (
         <div className="max-w-7xl mx-auto p-6">
