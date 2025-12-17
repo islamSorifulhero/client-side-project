@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const PendingOrders = () => {
     const axiosSecure = useAxiosSecure();
@@ -30,20 +31,56 @@ const PendingOrders = () => {
         }
     };
 
+
     const handleReject = async (orderId) => {
-        const reason = prompt("Enter rejection reason:");
-        if (!reason) return;
+        const result = await Swal.fire({
+            title: "Reject Order",
+            text: "Please provide a rejection reason",
+            icon: "warning",
+            input: "textarea",
+            inputPlaceholder: "Enter rejection reason...",
+            inputAttributes: {
+                required: true
+            },
+            showCancelButton: true,
+            confirmButtonText: "Reject Order",
+            cancelButtonText: "Cancel",
+            confirmButtonColor: "#d33",
+            preConfirm: (reason) => {
+                if (!reason || reason.trim().length < 3) {
+                    Swal.showValidationMessage("Rejection reason is required (min 3 characters)");
+                }
+                return reason;
+            }
+        });
+
+        if (!result.isConfirmed) return;
+
         try {
-            const res = await axiosSecure.patch(`/bookings/${orderId}/reject`, { reason });
-            if (res.data.modifiedCount) {
-                toast.success("Order rejected!");
+            const res = await axiosSecure.patch(
+                `/bookings/${orderId}/reject`,
+                { reason: result.value }
+            );
+
+            if (res.data.modifiedCount > 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Rejected!",
+                    text: "Order has been rejected successfully."
+                });
+
                 queryClient.invalidateQueries(["pending-orders"]);
             }
         } catch (err) {
             console.error(err);
-            toast.error("Failed to reject order!");
+            Swal.fire({
+                icon: "error",
+                title: "Failed!",
+                text: "Failed to reject order."
+            });
         }
     };
+
 
     const handleViewDetails = (orderId) => {
         navigate(`/dashboard/track-order/${orderId}`);
