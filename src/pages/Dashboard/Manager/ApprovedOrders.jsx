@@ -85,10 +85,10 @@ const ApprovedOrders = () => {
                         <tr className="bg-gray-200 text-gray-700">
                             <th>#</th>
                             <th>Order ID</th>
-                            <th>Users</th>
+                            <th className="hidden sm:table-cell">Users</th>
                             <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Approved Date</th>
+                            <th className="hidden md:table-cell">Quantity</th>
+                            <th className="hidden lg:table-cell">Approved Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -96,14 +96,20 @@ const ApprovedOrders = () => {
                         {orders.map((o, i) => (
                             <tr key={o._id} className="hover:bg-gray-50">
                                 <th>{i + 1}</th>
-                                <td className="font-mono text-xs">{o._id}</td>
-                                <td>{o.userEmail}</td>
-                                <td>{o.productTitle}</td>
-                                <td className="font-semibold">{o.orderQty}</td>
-                                <td>{o.approvedAt ? moment(o.approvedAt).format('MMM D, YYYY') : 'N/A'}</td>
-                                <td className="flex space-x-2">
-                                    <button onClick={() => openTrackingModal(o)} className="btn btn-sm btn-info text-white">Add Tracking</button>
-                                    <a href={`/dashboard/track-order/${o._id}`} className="btn btn-sm btn-outline btn-success">
+                                <td className="font-mono text-[10px] md:text-xs">
+                                    {o._id.slice(-6)}...
+                                </td>
+                                <td className="hidden sm:table-cell text-sm">{o.userEmail}</td>
+                                <td className="text-sm">{o.productTitle}</td>
+                                <td className="font-semibold hidden md:table-cell">{o.orderQty}</td>
+                                <td className="hidden lg:table-cell">
+                                    {o.approvedAt ? moment(o.approvedAt).format('MMM D, YYYY') : 'N/A'}
+                                </td>
+                                <td className="flex flex-col sm:flex-row gap-2">
+                                    <button onClick={() => openTrackingModal(o)} className="btn btn-xs md:btn-sm btn-info text-white">
+                                        Tracking
+                                    </button>
+                                    <a href={`/dashboard/track-order/${o._id}`} className="btn btn-xs md:btn-sm btn-outline btn-success text-center">
                                         View
                                     </a>
                                 </td>
@@ -113,7 +119,6 @@ const ApprovedOrders = () => {
                 </table>
             </div>
 
-            {/* Tracking Modal (Tailwind/DaisyUI) */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
