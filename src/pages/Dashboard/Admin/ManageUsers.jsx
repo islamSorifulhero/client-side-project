@@ -5,7 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const ManageUsers = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: users = [], refetch } = useQuery({
+    const { data: users = [], refetch, isLoading } = useQuery({
         queryKey: ["all-users"],
         queryFn: async () => {
             const res = await axiosSecure.get("/users");
@@ -18,19 +18,29 @@ const ManageUsers = () => {
         refetch();
     };
 
-    return (
-        <div className="p-6">
-            <h2 className="text-xl font-bold mb-4">Manage Users</h2>
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-40 w-full my-10">
+                <span className="loading loading-bars loading-lg text-primary"></span>
+            </div>
+        );
+    }
 
-            <div className="overflow-x-auto">
-                <table className="table w-full">
-                    <thead>
+    return (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+            <h2 className="text-lg sm:text-xl font-bold mb-4">
+                Manage Users ({users.length})
+            </h2>
+
+            <div className="overflow-x-auto border rounded-lg">
+                <table className="table w-full text-sm sm:text-base">
+                    <thead className="bg-gray-100">
                         <tr>
                             <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Role</th>
-                            <th>Actions</th>
+                            <th className="text-center">Role</th>
+                            <th className="text-center">Actions</th>
                         </tr>
                     </thead>
 
@@ -38,23 +48,39 @@ const ManageUsers = () => {
                         {users.map((u, i) => (
                             <tr key={u._id}>
                                 <td>{i + 1}</td>
-                                <td>{u.name}</td>
-                                <td>{u.email}</td>
-                                <td>{u.role}</td>
-                                <td className="flex gap-2">
-                                    <button
-                                        className="btn btn-sm"
-                                        onClick={() => handleRoleChange(u._id, "manager")}
-                                    >
-                                        Make Manager
-                                    </button>
 
-                                    <button
-                                        className="btn btn-sm btn-error"
-                                        onClick={() => handleRoleChange(u._id, "buyer")}
-                                    >
-                                        Make Buyer
-                                    </button>
+                                <td className="max-w-[150px] truncate">
+                                    {u.name || "—"}
+                                </td>
+
+                                <td className="max-w-[220px] truncate">
+                                    {u.email}
+                                </td>
+
+                                <td className="text-center capitalize">
+                                    <span className="badge badge-info text-white">
+                                        {u.role}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                                        <button
+                                            className="btn btn-xs sm:btn-sm"
+                                            onClick={() => handleRoleChange(u._id, "manager")}
+                                            disabled={u.role === "manager"}
+                                        >
+                                            Make Manager
+                                        </button>
+
+                                        <button
+                                            className="btn btn-xs sm:btn-sm btn-error"
+                                            onClick={() => handleRoleChange(u._id, "buyer")}
+                                            disabled={u.role === "buyer"}
+                                        >
+                                            Make Buyer
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}

@@ -19,8 +19,6 @@ const ManageProducts = () => {
         },
     });
 
-   
-
     const handleDelete = async (id) => {
         const result = await Swal.fire({
             title: "Are you sure?",
@@ -28,32 +26,19 @@ const ManageProducts = () => {
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
             confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "Cancel"
         });
 
         if (!result.isConfirmed) return;
 
         try {
             const res = await axiosSecure.delete(`/products/${id}`);
-
             if (res.data.deletedCount > 0) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Deleted!",
-                    text: "Product deleted successfully."
-                });
-
+                Swal.fire("Deleted!", "Product deleted successfully.", "success");
                 queryClient.invalidateQueries(["manager-products"]);
             }
-        } catch (err) {
-            console.error(err);
-            Swal.fire({
-                icon: "error",
-                title: "Failed!",
-                text: "Failed to delete product."
-            });
+        } catch {
+            Swal.fire("Failed!", "Failed to delete product.", "error");
         }
     };
 
@@ -68,30 +53,32 @@ const ManageProducts = () => {
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center h-40 w-full my-10">
+            <div className="flex justify-center items-center py-20">
                 <span className="loading loading-bars loading-lg text-primary"></span>
             </div>
         );
     }
 
     return (
-        <div className="max-w-7xl mx-auto p-6">
-            <h2 className="text-3xl font-bold mb-6 text-indigo-700">Manage Products ({filteredProducts.length}/{products.length})</h2>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-indigo-700">
+                Manage Products ({filteredProducts.length}/{products.length})
+            </h2>
 
-            <div className="mb-6 flex justify-between items-center">
+            <div className="mb-6">
                 <input
                     type="text"
                     placeholder="Search by name or category..."
-                    className="input input-bordered w-full max-w-xs shadow-sm"
+                    className="input input-bordered w-full sm:max-w-sm"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
 
-            <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+            <div className="hidden md:block overflow-x-auto bg-white shadow rounded-lg">
                 <table className="table w-full">
-                    <thead>
-                        <tr className="bg-gray-200 text-gray-700">
+                    <thead className="bg-gray-200">
+                        <tr>
                             <th>#</th>
                             <th>Image</th>
                             <th>Name</th>
@@ -103,25 +90,31 @@ const ManageProducts = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredProducts?.map((p, i) => (
-                            <tr key={p._id} className="hover:bg-gray-50">
-                                <th>{i + 1}</th>
-                                <td><img src={p.images?.[0] || "placeholder.png"} alt={p.name} className="w-16 h-16 object-cover rounded" /></td>
+                        {filteredProducts.map((p, i) => (
+                            <tr key={p._id}>
+                                <td>{i + 1}</td>
+                                <td>
+                                    <img
+                                        src={p.images?.[0] || "placeholder.png"}
+                                        alt={p.name}
+                                        className="w-16 h-16 object-cover rounded"
+                                    />
+                                </td>
                                 <td>{p.name}</td>
-                                <td className="font-mono">${p.price}</td>
+                                <td>${p.price}</td>
                                 <td>{p.category}</td>
                                 <td>{p.paymentOption}</td>
                                 <td>{p.showOnHome ? "Yes" : "No"}</td>
-                                <td className="flex space-x-2 items-center h-24">
+                                <td className="flex gap-2">
                                     <button
+                                        className="btn btn-xs btn-warning text-white"
                                         onClick={() => handleUpdate(p._id)}
-                                        className="btn btn-sm btn-warning text-white"
                                     >
                                         Update
                                     </button>
                                     <button
+                                        className="btn btn-xs btn-error text-white"
                                         onClick={() => handleDelete(p._id)}
-                                        className="btn btn-sm btn-error text-white"
                                     >
                                         Delete
                                     </button>
@@ -132,10 +125,55 @@ const ManageProducts = () => {
                 </table>
             </div>
 
-            {filteredProducts.length === 0 && !isLoading && (
-                <p className="text-center py-8 text-gray-500">No products match your search or no products found.</p>
-            )}
+            <div className="md:hidden space-y-4">
+                {filteredProducts.map((p) => (
+                    <div
+                        key={p._id}
+                        className="border rounded-lg p-4 shadow bg-white"
+                    >
+                        <div className="flex gap-4 items-center">
+                            <img
+                                src={p.images?.[0] || "placeholder.png"}
+                                alt={p.name}
+                                className="w-20 h-20 object-cover rounded"
+                            />
+                            <div className="flex-1">
+                                <p className="font-semibold text-lg">{p.name}</p>
+                                <p className="text-sm text-gray-500">
+                                    {p.category}
+                                </p>
+                                <p className="font-mono">${p.price}</p>
+                            </div>
+                        </div>
 
+                        <div className="mt-3 text-sm space-y-1">
+                            <p><strong>Payment:</strong> {p.paymentOption}</p>
+                            <p><strong>Show on Home:</strong> {p.showOnHome ? "Yes" : "No"}</p>
+                        </div>
+
+                        <div className="mt-4 flex flex-col gap-2">
+                            <button
+                                className="btn btn-sm btn-warning text-white w-full"
+                                onClick={() => handleUpdate(p._id)}
+                            >
+                                Update
+                            </button>
+                            <button
+                                className="btn btn-sm btn-error text-white w-full"
+                                onClick={() => handleDelete(p._id)}
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {filteredProducts.length === 0 && (
+                <p className="text-center py-8 text-gray-500">
+                    No products match your search.
+                </p>
+            )}
         </div>
     );
 };

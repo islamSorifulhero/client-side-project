@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
-import moment from "moment/moment";
-
+import moment from "moment";
 
 const TRACKING_STATUSES = [
     "Cutting Completed",
@@ -44,7 +43,7 @@ const ApprovedOrders = () => {
     const handleTrackingSubmit = async (e) => {
         e.preventDefault();
 
-        if (!currentOrder || !trackingData.location || !trackingData.status) {
+        if (!trackingData.location || !trackingData.status) {
             toast.error("Location and Status are required!");
             return;
         }
@@ -57,59 +56,67 @@ const ApprovedOrders = () => {
             });
 
             if (res.data.modifiedCount) {
-                toast.success(`Tracking updated for Order ID: ${currentOrder._id.slice(-4)}`);
+                toast.success("Tracking updated successfully!");
                 queryClient.invalidateQueries(["approved-orders"]);
                 setIsModalOpen(false);
                 setTrackingData({ location: '', note: '', status: TRACKING_STATUSES[0] });
             }
-        } catch (err) {
-            console.error(err);
+        } catch {
             toast.error("Failed to add tracking!");
         }
     };
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center h-40 w-full my-10">
+            <div className="flex justify-center items-center py-20">
                 <span className="loading loading-bars loading-lg text-primary"></span>
             </div>
         );
     }
-    return (
-        <div className="max-w-7xl mx-auto p-6">
-            <h2 className="text-3xl font-bold mb-6 text-indigo-700">Approved Orders ({orders.length})</h2>
 
-            <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+    return (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-indigo-700">
+                Approved Orders ({orders.length})
+            </h2>
+
+            <div className="hidden md:block overflow-x-auto bg-white shadow rounded-lg">
                 <table className="table w-full">
-                    <thead>
-                        <tr className="bg-gray-200 text-gray-700">
+                    <thead className="bg-gray-200">
+                        <tr>
                             <th>#</th>
                             <th>Order ID</th>
-                            <th className="hidden sm:table-cell">Users</th>
+                            <th>User</th>
                             <th>Product</th>
-                            <th className="hidden md:table-cell">Quantity</th>
-                            <th className="hidden lg:table-cell">Approved Date</th>
+                            <th>Qty</th>
+                            <th>Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {orders.map((o, i) => (
-                            <tr key={o._id} className="hover:bg-gray-50">
-                                <th>{i + 1}</th>
-                                <td className="font-mono text-[10px] md:text-xs">
-                                    {o._id.slice(-6)}...
+                            <tr key={o._id}>
+                                <td>{i + 1}</td>
+                                <td className="font-mono">{o._id.slice(-6)}</td>
+                                <td className="break-all">{o.userEmail}</td>
+                                <td>{o.productTitle}</td>
+                                <td>{o.orderQty}</td>
+                                <td>
+                                    {o.approvedAt
+                                        ? moment(o.approvedAt).format("MMM D, YYYY")
+                                        : "N/A"}
                                 </td>
-                                <td className="hidden sm:table-cell text-sm">{o.userEmail}</td>
-                                <td className="text-sm">{o.productTitle}</td>
-                                <td className="font-semibold hidden md:table-cell">{o.orderQty}</td>
-                                <td className="hidden lg:table-cell">
-                                    {o.approvedAt ? moment(o.approvedAt).format('MMM D, YYYY') : 'N/A'}
-                                </td>
-                                <td className="flex flex-col sm:flex-row gap-2">
-                                    <button onClick={() => openTrackingModal(o)} className="btn btn-xs md:btn-sm btn-info text-white">
+                                <td className="flex gap-2">
+                                    <button
+                                        onClick={() => openTrackingModal(o)}
+                                        className="btn btn-xs btn-info text-white"
+                                    >
                                         Tracking
                                     </button>
-                                    <a href={`/dashboard/track-order/${o._id}`} className="btn btn-xs md:btn-sm btn-outline btn-success text-center">
+                                    <a
+                                        href={`/dashboard/track-order/${o._id}`}
+                                        className="btn btn-xs btn-outline btn-success"
+                                    >
                                         View
                                     </a>
                                 </td>
@@ -119,64 +126,105 @@ const ApprovedOrders = () => {
                 </table>
             </div>
 
+            <div className="md:hidden space-y-4">
+                {orders.map((o) => (
+                    <div key={o._id} className="border rounded-lg p-4 shadow bg-white">
+                        <p className="text-sm text-gray-500 font-mono">
+                            Order #{o._id.slice(-6)}
+                        </p>
+
+                        <p className="break-all">
+                            <strong>User:</strong> {o.userEmail}
+                        </p>
+                        <p><strong>Product:</strong> {o.productTitle}</p>
+                        <p><strong>Quantity:</strong> {o.orderQty}</p>
+                        <p>
+                            <strong>Date:</strong>{" "}
+                            {o.approvedAt
+                                ? moment(o.approvedAt).format("MMM D, YYYY")
+                                : "N/A"}
+                        </p>
+
+                        <div className="mt-4 flex flex-col gap-2">
+                            <button
+                                onClick={() => openTrackingModal(o)}
+                                className="btn btn-sm btn-info text-white w-full"
+                            >
+                                Add Tracking
+                            </button>
+                            <a
+                                href={`/dashboard/track-order/${o._id}`}
+                                className="btn btn-sm btn-outline btn-success w-full text-center"
+                            >
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
-                        <h3 className="font-bold text-xl mb-4">Add Tracking Update</h3>
-                        <p className="text-sm mb-4">Order: {currentOrder?.productTitle}</p>
-                        <form onSubmit={handleTrackingSubmit}>
+                    <div className="bg-white w-full max-w-md mx-4 p-6 rounded-lg shadow-xl">
+                        <h3 className="font-bold text-xl mb-2">Add Tracking Update</h3>
+                        <p className="text-sm mb-4">
+                            Product: {currentOrder?.productTitle}
+                        </p>
 
-                            <div className="form-control mb-4">
-                                <label className="label">
-                                    <span className="label-text">New Status</span>
-                                </label>
-                                <select
-                                    className="select select-bordered w-full"
-                                    value={trackingData.status}
-                                    onChange={(e) => setTrackingData({ ...trackingData, status: e.target.value })}
+                        <form onSubmit={handleTrackingSubmit} className="space-y-4">
+                            <select
+                                className="select select-bordered w-full"
+                                value={trackingData.status}
+                                onChange={(e) =>
+                                    setTrackingData({ ...trackingData, status: e.target.value })
+                                }
+                            >
+                                {TRACKING_STATUSES.map(status => (
+                                    <option key={status}>{status}</option>
+                                ))}
+                            </select>
+
+                            <input
+                                type="text"
+                                placeholder="Current Location"
+                                className="input input-bordered w-full"
+                                value={trackingData.location}
+                                onChange={(e) =>
+                                    setTrackingData({ ...trackingData, location: e.target.value })
+                                }
+                                required
+                            />
+
+                            <textarea
+                                placeholder="Note (optional)"
+                                className="textarea textarea-bordered w-full"
+                                rows="3"
+                                value={trackingData.note}
+                                onChange={(e) =>
+                                    setTrackingData({ ...trackingData, note: e.target.value })
+                                }
+                            />
+
+                            <div className="flex gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="btn w-1/2"
                                 >
-                                    {TRACKING_STATUSES.map(status => (
-                                        <option key={status} value={status}>{status}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="form-control mb-4">
-                                <label className="label">
-                                    <span className="label-text">Current Location*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    placeholder="e.g., Factory Floor C"
-                                    className="input input-bordered w-full"
-                                    value={trackingData.location}
-                                    onChange={(e) => setTrackingData({ ...trackingData, location: e.target.value })}
-                                    required
-                                />
-                            </div>
-
-                            <div className="form-control mb-6">
-                                <label className="label">
-                                    <span className="label-text">Note (Optional)</span>
-                                </label>
-                                <textarea
-                                    placeholder="Details about the update..."
-                                    className="textarea textarea-bordered h-24 w-full"
-                                    value={trackingData.note}
-                                    onChange={(e) => setTrackingData({ ...trackingData, note: e.target.value })}
-                                />
-                            </div>
-
-                            <div className="modal-action flex justify-end space-x-3">
-                                <button type="button" className="btn" onClick={() => setIsModalOpen(false)}>Cancel</button>
-                                <button type="submit" className="btn btn-info text-white">Save Update</button>
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn btn-info text-white w-1/2"
+                                >
+                                    Save
+                                </button>
                             </div>
                         </form>
                     </div>
                 </div>
             )}
         </div>
-
     );
 };
 

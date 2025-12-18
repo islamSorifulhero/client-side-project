@@ -1,16 +1,14 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { FaTrash, FaEdit } from 'react-icons/fa';
-import Swal from 'sweetalert2';
+import { FaTrash, FaEdit } from "react-icons/fa";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
 const GetAllProducts = () => {
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
     const navigate = useNavigate();
-
-
 
     const { data: products = [], isLoading } = useQuery({
         queryKey: ["all-products"],
@@ -27,18 +25,19 @@ const GetAllProducts = () => {
             Swal.fire("Delete successful!", "The product has been deleted successfully!", "success");
         },
         onError: () => {
-            Swal.fire("Delete failed!", "Failed to delete product।", "error");
+            Swal.fire("Delete failed!", "Failed to delete product.", "error");
         }
     });
 
     const toggleHomeMutation = useMutation({
-        mutationFn: ({ id, showOnHome }) => axiosSecure.patch(`/products/${id}/toggle-home`, { showOnHome }),
+        mutationFn: ({ id, showOnHome }) =>
+            axiosSecure.patch(`/products/${id}/toggle-home`, { showOnHome }),
         onSuccess: () => {
             queryClient.invalidateQueries(["all-products"]);
-            Swal.fire("status updated!", "Home page status updated successfully.", "success");
+            Swal.fire("Status updated!", "Home page status updated successfully.", "success");
         },
         onError: () => {
-            Swal.fire("Update failed!", "Failed to update status।", "error");
+            Swal.fire("Update failed!", "Failed to update status.", "error");
         }
     });
 
@@ -78,11 +77,14 @@ const GetAllProducts = () => {
     }
 
     return (
-        <div className="max-w-7xl mx-auto p-6">
-            <h2 className="text-2xl font-bold mb-4">All Products ({products.length})</h2>
-            <div className="overflow-x-auto">
-                <table className="table w-full">
-                    <thead>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4">
+                All Products ({products.length})
+            </h2>
+
+            <div className="overflow-x-auto border rounded-lg">
+                <table className="table w-full text-sm sm:text-base">
+                    <thead className="bg-gray-100">
                         <tr>
                             <th>#</th>
                             <th>Image</th>
@@ -90,21 +92,41 @@ const GetAllProducts = () => {
                             <th>Price</th>
                             <th>Category</th>
                             <th>Created By</th>
-                            <th>Show on Home</th>
-                            <th>Actions</th>
+                            <th className="text-center">Show on Home</th>
+                            <th className="text-center">Actions</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         {products.map((p, i) => (
                             <tr key={p._id}>
-                                <th>{i + 1}</th>
-                                <td><img src={p.images?.[0] || ""} alt="" className="w-16 h-16 object-cover rounded" /></td>
-                                <td>{p.name}</td>
-                                <td>${p.price}</td>
-                                <td>{p.category}</td>
-                                <td>{p.createdBy || "—"}</td>
+                                <td>{i + 1}</td>
 
                                 <td>
+                                    <img
+                                        src={p.images?.[0] || ""}
+                                        alt=""
+                                        className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded"
+                                    />
+                                </td>
+
+                                <td className="max-w-[180px] truncate">
+                                    {p.name}
+                                </td>
+
+                                <td className="whitespace-nowrap">
+                                    ${p.price}
+                                </td>
+
+                                <td className="whitespace-nowrap">
+                                    {p.category}
+                                </td>
+
+                                <td className="max-w-[150px] truncate">
+                                    {p.createdBy || "—"}
+                                </td>
+
+                                <td className="text-center">
                                     <input
                                         type="checkbox"
                                         className="toggle toggle-sm toggle-success"
@@ -113,21 +135,23 @@ const GetAllProducts = () => {
                                     />
                                 </td>
 
-                                <td className="flex gap-2 items-center h-full pt-6">
-                                    <button
-                                        className="btn btn-sm btn-info text-white"
-                                        onClick={() => handleEdit(p._id)}
-                                    >
-                                        <FaEdit />
-                                    </button>
+                                <td>
+                                    <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                                        <button
+                                            className="btn btn-xs sm:btn-sm btn-info text-white"
+                                            onClick={() => handleEdit(p._id)}
+                                        >
+                                            <FaEdit />
+                                        </button>
 
-                                    <button
-                                        className="btn btn-sm btn-error text-white"
-                                        onClick={() => handleDelete(p._id)}
-                                        disabled={deleteMutation.isLoading}
-                                    >
-                                        <FaTrash />
-                                    </button>
+                                        <button
+                                            className="btn btn-xs sm:btn-sm btn-error text-white"
+                                            onClick={() => handleDelete(p._id)}
+                                            disabled={deleteMutation.isLoading}
+                                        >
+                                            <FaTrash />
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
