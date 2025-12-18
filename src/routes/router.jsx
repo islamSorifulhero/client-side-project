@@ -77,6 +77,7 @@ export const router = createBrowserRouter([
       { path: "profile", Component: Profile },
       { path: "my-orders", Component: MyOrders },
       { path: "track-order/:id", Component: TrackingOrder },
+      { path: "track-order", Component: TrackOrder },
 
       {
         path: "add-product",
@@ -129,7 +130,6 @@ export const router = createBrowserRouter([
       { path: "payment-history", element: <BuyerRoute><PaymentHistory></PaymentHistory></BuyerRoute> },
 
 
-      { path: "track-order", Component: TrackOrder },
     ]
   }
 ]);

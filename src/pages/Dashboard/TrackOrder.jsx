@@ -1,48 +1,38 @@
-import React from "react";
-import { useParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 const TrackOrder = () => {
-    const { orderId } = useParams();
-    const axiosSecure = useAxiosSecure();
-    console.log(axiosSecure);
+    const [id, setId] = useState("");
+    const navigate = useNavigate();
 
-    const { data: order, isLoading } = useQuery({
-        queryKey: ["track-order", orderId],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/get-booking/${orderId}`);
-            return res.data;
-        },
-        enabled: !!orderId
-    });
-
-    if (isLoading) return <p className="py-8 text-center">Loading...</p>;
-    if (!order) return <p className="py-8 text-center">Order not found.</p>;
-
-    const steps = order.tracking || [];
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if(id.trim()) {
+            navigate(`/dashboard/track-order/${id.trim()}`);
+        }
+    };
 
     return (
-        <div className="max-w-5xl mx-auto p-6">
-            <h2 className="text-2xl font-bold mb-6">Tracking Order: {order.productTitle}</h2>
-
-            {steps.length === 0 ? (
-                <p className="text-center py-4">No tracking updates yet.</p>
-            ) : (
-                <div className="timeline">
-                    {steps.map((step, index) => (
-                        <div key={index} className="timeline-item mb-6 flex items-start">
-                            <div className="timeline-marker w-4 h-4 rounded-full bg-blue-500 mt-1.5"></div>
-                            <div className="timeline-content ml-4">
-                                <h4 className="font-semibold">{step.status}</h4>
-                                <p className="text-sm text-gray-600">{step.note}</p>
-                                <p className="text-xs text-gray-400">{new Date(step.date).toLocaleString()}</p>
-                                <p className="text-xs text-gray-500">Location: {step.location}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
+        <div className="min-h-[60vh] flex items-center justify-center bg-gray-50 p-6">
+            <div className="max-w-md w-full bg-white p-8 rounded-3xl shadow-xl">
+                <h2 className="text-2xl font-extrabold text-center mb-6 text-gray-800">Track Your Package</h2>
+                <form onSubmit={handleSearch} className="space-y-4">
+                    <div>
+                        <label className="text-sm font-semibold text-gray-600 block mb-2">Enter Booking ID</label>
+                        <input 
+                            type="text" 
+                            className="input input-bordered w-full rounded-xl focus:ring-2 focus:ring-indigo-500"
+                            placeholder="e.g. 64b8f..." 
+                            value={id}
+                            onChange={(e) => setId(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary w-full rounded-xl shadow-lg">
+                        Track Now
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };
