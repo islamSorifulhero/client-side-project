@@ -1,6 +1,5 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-// import { Link, useNavigate, useLocation } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -18,7 +17,6 @@ const Register = () => {
     const handleRegistration = (data) => {
         const profileImg = data.photo[0];
 
-        // Password validation: uppercase, lowercase, min 6
         const passRegex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
         if (!passRegex.test(data.password)) {
             toast.error('Password must contain uppercase, lowercase & at least 6 characters');
@@ -27,7 +25,6 @@ const Register = () => {
 
         registerUser(data.email, data.password)
             .then(() => {
-                // Upload image to imgbb
                 const formData = new FormData();
                 formData.append('image', profileImg);
                 const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
@@ -36,10 +33,8 @@ const Register = () => {
                     .then(res => {
                         const photoURL = res.data.data.url;
 
-                        // Update Firebase profile
                         updateUserProfile({ displayName: data.name, photoURL })
                             .then(() => {
-                                // Save user in backend DB
                                 const userInfo = {
                                     email: data.email,
                                     displayName: data.name,
