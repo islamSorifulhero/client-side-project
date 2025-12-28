@@ -15,7 +15,7 @@ const Login = () => {
         signInUser(data.email, data.password)
             .then(result => {
                 toast.success('Login Successful');
-                navigate(location.state?.from || '/'); // redirect after login
+                navigate(location.state?.from || '/');
             })
             .catch(error => {
                 toast.error('Invalid email or password');
