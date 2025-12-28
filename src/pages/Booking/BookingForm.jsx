@@ -32,7 +32,6 @@ const BookingForm = () => {
           return;
         }
         setProduct(p);
-
         const min = p.minimumOrder ?? p.minOrder ?? 1;
         const available = p.availableQty ?? p.quantity ?? 0;
         const initialQty = Math.min(Math.max(min, 1), available || min);
@@ -137,7 +136,6 @@ const BookingForm = () => {
 
   const buttonText = paymentOption === "COD" ? "Place Order (COD)" : "Proceed to Payment";
 
-
   return (
     <div className="max-w-3xl mx-auto p-5">
       <h2 className="text-2xl font-bold mb-4">Confirm Order: {product.name}</h2>
@@ -208,7 +206,6 @@ const BookingForm = () => {
             <option value="Stripe">Online Payment (Stripe)</option>
           </select>
         </div>
-
 
         <div>
           <label className="font-semibold">Additional Notes</label>

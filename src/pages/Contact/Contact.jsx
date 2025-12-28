@@ -6,30 +6,25 @@ const Contact = () => {
         <div className="max-w-5xl mx-auto p-6 space-y-6">
             <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
 
-
             <p className="text-base leading-7">
                 If you have any questions, feedback, or want to reach out to our support
                 team, feel free to contact us through the information below.
             </p>
-
 
             <div className="p-4 border rounded-2xl shadow space-y-3">
                 <h2 className="text-xl font-semibold">Support Email</h2>
                 <p>support@garmtracker.com</p>
             </div>
 
-
             <div className="p-4 border rounded-2xl shadow space-y-3">
                 <h2 className="text-xl font-semibold">Phone</h2>
                 <p>+880 1700 000000</p>
             </div>
 
-
             <div className="p-4 border rounded-2xl shadow space-y-3">
                 <h2 className="text-xl font-semibold">Office Address</h2>
                 <p>Mirpur, Dhaka, Bangladesh</p>
             </div>
-
 
             <form className="space-y-4 p-6 border rounded-2xl shadow">
                 <h2 className="text-xl font-semibold mb-2">Send us a message</h2>
