@@ -6,7 +6,7 @@ The Garments Order & Production Tracker System is a web-based platform designed 
 
 ## Live Site Link
 
-https://sunny-axolotl-1dff72.netlify.app/
+https://sunny-axolotl-1dff72.netlify.app
 
 ## Features
 
