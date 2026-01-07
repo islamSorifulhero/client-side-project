@@ -37,7 +37,6 @@ import OrderDetails from "../pages/Dashboard/Admin/OrderDetails";
 import TrackingOrder from "../pages/Dashboard/TrackingOrder";
 import UpdateProduct from "../pages/Dashboard/Manager/UpdateProduct";
 
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -59,7 +58,6 @@ export const router = createBrowserRouter([
     ]
   },
 
-
   {
     path: "/",
     Component: AuthLayout,
@@ -68,7 +66,6 @@ export const router = createBrowserRouter([
       { path: "register", Component: Register }
     ]
   },
-
 
   {
     path: "/dashboard",
@@ -101,7 +98,6 @@ export const router = createBrowserRouter([
       },
 
       // admin-users
-
       {
         path: "manage-users",
         element: <AdminRoute><UsersManagement></UsersManagement></AdminRoute>
@@ -123,13 +119,10 @@ export const router = createBrowserRouter([
         element: <AdminRoute><OrderDetails></OrderDetails></AdminRoute>
       },
 
-
       { path: "payment/:parcelId", Component: Payment },
       { path: "payment-success", element: <PrivateRoute><PaymentSuccess></PaymentSuccess></PrivateRoute> },
       { path: "payment-cancelled", element: <PrivateRoute><PaymentCancelled></PaymentCancelled></PrivateRoute> },
       { path: "payment-history", element: <BuyerRoute><PaymentHistory></PaymentHistory></BuyerRoute> },
-
-
     ]
   }
 ]);
