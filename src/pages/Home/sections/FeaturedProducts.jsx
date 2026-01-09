@@ -10,7 +10,7 @@ const FeaturedProducts = () => {
     const { data: products = [], isLoading } = useQuery({
         queryKey: ["featuredProducts"],
         queryFn: async () => {
-            const res = await axiosPublic.get("/products?limit=6");
+            const res = await axiosPublic.get("/products?limit=8");
             return res.data;
         },
     });
@@ -29,7 +29,7 @@ const FeaturedProducts = () => {
                 Featured Products
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {products.map((p) => (
                     <motion.div
                         key={p._id}
