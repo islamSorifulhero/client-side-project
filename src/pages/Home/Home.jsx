@@ -7,6 +7,7 @@ import ReviewsCarousel from './sections/ReviewsCarousel';
 import HowItWorks from './sections/HowItWorks';
 import WhyChooseUs from './sections/WhyChooseUs';
 import NewsletterBanner from './sections/NewsletterBanner';
+import StatsSection from './sections/StatsSection';
 
 
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
         <div>
             <Hero></Hero>
             <ProductCategories></ProductCategories>
+            <StatsSection></StatsSection>
             <FeaturedProducts></FeaturedProducts>
             <HowItWorks></HowItWorks>
             <ReviewsCarousel></ReviewsCarousel>
