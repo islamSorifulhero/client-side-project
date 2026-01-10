@@ -1,53 +1,58 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
-import shopImg from "../../../assets/shop-img.jpg"
+
+import shopImg from "../../../assets/shop-img.jpg";
 import Electronic from "../../../assets/Electronic-Devices.png";
 import Fashion from "../../../assets/Fashion.jpg";
 import HomeAppliances from "../../../assets/Home-img.jpg";
 import garments from "../../../assets/garments.mp4";
 
 const categories = [
-    { name: "shop", img: shopImg, count: "250+ Items" },
+    { name: "Groceries", img: shopImg, count: "250+ Items" },
     { name: "Electronics", img: Electronic, count: "150+ Items" },
     { name: "Fashion", img: Fashion, count: "320+ Items" },
-    { name: "Shopping", img: HomeAppliances, count: "490+ Items" },
+    { name: "Home Appliances", img: HomeAppliances, count: "490+ Items" },
 ];
 
 const ProductCategories = () => {
     return (
-        <section className="bg-white dark:bg-[#0f172a] transition-colors duration-300">
-            {/* VIDEO SECTION - FULL NATURAL LOOK */}
-            <div className="w-full h-auto overflow-hidden shadow-lg">
-                <video 
-                    autoPlay 
-                    muted 
-                    loop 
-                    playsInline 
-                    src={garments} 
-                    className="w-full h-full object-cover"
-                ></video>
+        <section className="bg-base-100 transition-colors duration-300">
+
+            {/* VIDEO BANNER */}
+            <div className="w-full overflow-hidden shadow-lg">
+                <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    src={garments}
+                    className="w-full h-[50vh] object-cover"
+                />
             </div>
 
-            {/* CATEGORIES SECTION */}
+            {/* CATEGORY SECTION */}
             <div className="max-w-7xl mx-auto px-6 py-20">
-                {/* Header Section */}
-                <div className="text-center mb-12">
-                    <motion.h2 
+
+                {/* HEADER */}
+                <div className="text-center mb-16">
+                    <motion.h2
                         initial={{ opacity: 0, y: -20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter"
+                        className="text-3xl md:text-5xl font-black uppercase tracking-tight text-base-content"
                     >
                         Shop By <span className="text-primary">Category</span>
                     </motion.h2>
-                    <div className="w-20 h-1.5 bg-primary mx-auto mt-4 rounded-full"></div>
-                    <p className="mt-4 text-gray-600 dark:text-gray-400 font-bold uppercase text-sm tracking-widest">
+
+                    <div className="w-24 h-1.5 bg-primary mx-auto mt-4 rounded-full"></div>
+
+                    <p className="mt-4 text-base-content/70 font-bold uppercase text-sm tracking-widest">
                         Crafting Excellence Since 2026
                     </p>
                 </div>
 
-                {/* Grid Section */}
+                {/* GRID */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                     {categories.map((c, i) => (
                         <motion.div
@@ -56,32 +61,32 @@ const ProductCategories = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: i * 0.1 }}
-                            whileHover={{ y: -12 }}
-                            className="group bg-gray-50 dark:bg-gray-800 rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 dark:border-gray-700 transition-all duration-300"
+                            whileHover={{ y: -10 }}
+                            className="group bg-base-200 rounded-[2rem] overflow-hidden shadow-xl border border-base-300 transition-all duration-300"
                         >
-                            {/* Card Image */}
+                            {/* IMAGE */}
                             <div className="relative h-72 overflow-hidden">
                                 <img
                                     src={c.img}
                                     alt={c.name}
                                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
-                                {/* Subtle Gradient overlay on hover */}
-                                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
 
-                            {/* Card Body */}
+                            {/* CONTENT */}
                             <div className="p-8 text-center">
-                                <h3 className="text-2xl font-black text-gray-800 dark:text-white uppercase tracking-wide group-hover:text-primary transition-colors">
+                                <h3 className="text-2xl font-black uppercase tracking-wide text-base-content group-hover:text-primary transition-colors">
                                     {c.name}
                                 </h3>
-                                <p className="text-gray-500 dark:text-gray-400 font-bold mt-2 text-sm tracking-wider uppercase">
+
+                                <p className="mt-2 text-sm font-bold uppercase tracking-wider text-base-content/60">
                                     {c.count}
                                 </p>
 
                                 <Link
                                     to="/all-products"
-                                    className="mt-6 inline-block text-xs font-black text-primary border-b-2 border-primary hover:text-secondary hover:border-secondary transition-all uppercase tracking-widest"
+                                    className="mt-6 inline-block text-xs font-black uppercase tracking-widest text-primary border-b-2 border-primary hover:text-secondary hover:border-secondary transition-all"
                                 >
                                     Explore More
                                 </Link>

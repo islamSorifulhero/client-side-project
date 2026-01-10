@@ -4,20 +4,20 @@ import { Link } from "react-router";
 
 const SpecialOffer = () => {
     return (
-        <section className="py-12 bg-white dark:bg-[#0f172a] transition-colors duration-300">
-            <div className="container mx-auto px-6">
+        <section className="py-12 bg-base-100 dark:bg-base-200 transition-colors duration-300">
+            <div className="max-w-7xl mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     className="relative rounded-[3rem] overflow-hidden bg-gradient-to-r from-primary to-indigo-700 text-white shadow-2xl"
                 >
-                    {/* Background Decorative Circles */}
+                    {/* Decorative Circles */}
                     <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
                     <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-black/20 rounded-full blur-3xl"></div>
 
                     <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-center gap-10 p-10 lg:p-20">
-                        {/* Text Content */}
+                        {/* Text Section */}
                         <div className="space-y-6 text-center lg:text-left">
                             <motion.span
                                 initial={{ opacity: 0, x: -20 }}
@@ -32,7 +32,7 @@ const SpecialOffer = () => {
                                 <span className="text-yellow-400 italic">Up to 60% Off</span>
                             </h2>
 
-                            <p className="text-lg text-indigo-100 font-medium max-w-md mx-auto lg:mx-0">
+                            <p className="text-lg dark:text-gray-300 font-medium max-w-md mx-auto lg:mx-0">
                                 Upgrade your wardrobe with our premium fabrics. Get exclusive discounts on our latest 2026 collection.
                             </p>
 
@@ -49,7 +49,7 @@ const SpecialOffer = () => {
                             </div>
                         </div>
 
-                        {/* Visual Element (Timer/Badge) */}
+                        {/* Visual Badge / Timer */}
                         <div className="hidden lg:flex justify-center">
                             <motion.div
                                 animate={{ y: [0, -20, 0] }}

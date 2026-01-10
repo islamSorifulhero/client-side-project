@@ -39,8 +39,8 @@ const reviews = [
 
 const Testimonials = () => {
     return (
-        <section className="py-20 bg-gray-50 dark:bg-[#0f172a] transition-colors duration-300 overflow-hidden">
-            <div className="container mx-auto px-6">
+        <section className="py-20 bg-base-100 dark:bg-base-200 transition-colors duration-300 overflow-hidden">
+            <div className="max-w-7xl mx-auto px-6">
 
                 {/* Section Header */}
                 <div className="text-center mb-16">
@@ -48,7 +48,7 @@ const Testimonials = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter"
+                        className="text-3xl md:text-5xl font-black text-base-content uppercase tracking-tighter"
                     >
                         What Our <span className="text-primary">Clients Say</span>
                     </motion.h2>
@@ -65,7 +65,7 @@ const Testimonials = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             whileHover={{ y: -10 }}
-                            className="bg-white dark:bg-gray-800 p-8 rounded-[2rem] shadow-xl border border-gray-100 dark:border-gray-700 relative group transition-all"
+                            className="bg-base-100 dark:bg-base-300 p-8 rounded-[2rem] shadow-xl border border-base-200 dark:border-base-400 relative group transition-all"
                         >
                             {/* Quote Icon */}
                             <div className="absolute top-6 right-8 text-primary/10 group-hover:text-primary/20 text-5xl transition-colors">
@@ -75,12 +75,15 @@ const Testimonials = () => {
                             {/* Rating */}
                             <div className="flex gap-1 mb-4 text-yellow-500">
                                 {[...Array(5)].map((_, i) => (
-                                    <FaStar key={i} className={i < review.rating ? "fill-current" : "text-gray-300"} />
+                                    <FaStar
+                                        key={i}
+                                        className={i < review.rating ? "fill-current" : "text-gray-300 dark:text-gray-500"}
+                                    />
                                 ))}
                             </div>
 
                             {/* Comment */}
-                            <p className="text-gray-600 dark:text-gray-400 font-medium italic mb-8 leading-relaxed">
+                            <p className="text-base-content/70 dark:text-base-content/60 font-medium italic mb-8 leading-relaxed">
                                 "{review.comment}"
                             </p>
 
@@ -92,7 +95,7 @@ const Testimonials = () => {
                                     className="w-12 h-12 rounded-full border-2 border-primary object-cover"
                                 />
                                 <div>
-                                    <h4 className="font-black text-gray-900 dark:text-white uppercase text-sm tracking-tighter">
+                                    <h4 className="font-black text-base-content dark:text-white uppercase text-sm tracking-tighter">
                                         {review.name}
                                     </h4>
                                     <p className="text-xs font-bold text-primary uppercase">{review.role}</p>
@@ -101,6 +104,7 @@ const Testimonials = () => {
                         </motion.div>
                     ))}
                 </div>
+
             </div>
         </section>
     );
