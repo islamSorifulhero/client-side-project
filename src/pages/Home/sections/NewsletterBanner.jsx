@@ -18,11 +18,11 @@ const NewsletterBanner = () => {
                         <p className="text-indigo-100 font-bold mb-10 uppercase tracking-widest text-sm">
                             Subscribe to get early access to new collections and exclusive offers.
                         </p>
-                        
+
                         <form className="flex flex-col md:flex-row gap-4">
-                            <input 
-                                type="email" 
-                                placeholder="ENTER YOUR EMAIL" 
+                            <input
+                                type="email"
+                                placeholder="ENTER YOUR EMAIL"
                                 className="flex-grow px-8 py-5 rounded-2xl bg-white/20 border-2 border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:bg-white focus:text-black transition-all font-bold uppercase text-sm"
                             />
                             <button className="px-10 py-5 bg-yellow-400 text-black font-black uppercase rounded-2xl hover:bg-white transition-all shadow-xl">

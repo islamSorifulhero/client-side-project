@@ -1,41 +1,42 @@
 import React from "react";
-import { FaCheckCircle, FaHeadset, FaMoneyBillWave } from "react-icons/fa";
-
-const features = [
-    {
-        icon: <FaMoneyBillWave className="text-4xl text-primary" />,
-        title: "Best Price Guaranteed",
-        desc: "We ensure unbeatable prices for all products."
-    },
-    {
-        icon: <FaCheckCircle className="text-4xl text-primary" />,
-        title: "Trusted Quality",
-        desc: "Every item is verified and tested before listing."
-    },
-    {
-        icon: <FaHeadset className="text-4xl text-primary" />,
-        title: "24/7 Support",
-        desc: "Our team is always here to assist you."
-    }
-];
+import { Link } from "react-router";
 
 const WhyChooseUs = () => {
     return (
-        <div className="bg-base-200 py-16">
-            <div className="max-w-6xl mx-auto px-4 text-center">
-                <h2 className="text-3xl font-bold mb-10">Why Choose Us?</h2>
+        <section className="py-16 bg-base-200">
+            <div className="container mx-auto px-6">
+                <div className="rounded-2xl bg-primary text-primary-content p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8">
+                    {/* Text Content */}
+                    <div>
+                        <h2 className="text-3xl md:text-4xl font-bold">
+                            Ready to Upgrade Your Style?
+                        </h2>
+                        <p className="mt-4 max-w-xl text-primary-content/90">
+                            Discover the latest fashion trends, exclusive collections, and
+                            special offers tailored just for you. Start shopping today and
+                            experience premium quality like never before.
+                        </p>
+                    </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {features.map((f, i) => (
-                        <div key={i} className="card shadow-lg p-6 rounded-xl text-center">
-                            <div className="mb-4 flex justify-center">{f.icon}</div>
-                            <h3 className="text-xl font-bold mb-2">{f.title}</h3>
-                            <p className="text-gray-600">{f.desc}</p>
-                        </div>
-                    ))}
+                    {/* Action Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <Link
+                            to="/all-products"
+                            className="btn btn-secondary btn-lg text-secondary-content"
+                        >
+                            Explore Products
+                        </Link>
+
+                        <Link
+                            to="/register"
+                            className="btn btn-outline btn-lg border-primary-content text-primary-content hover:bg-primary-content hover:text-primary"
+                        >
+                            Create Free Account
+                        </Link>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

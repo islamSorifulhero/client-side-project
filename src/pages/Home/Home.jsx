@@ -13,6 +13,7 @@ import OurServices from './sections/OurServices';
 import SpecialOffer from './sections/SpecialOffer';
 import BrandPartners from './sections/BrandPartners';
 import FashionBlog from './sections/FashionBlog';
+import WorkingProcess from './sections/WorkingProcess';
 
 
 const Home = () => {
@@ -29,10 +30,11 @@ const Home = () => {
             <BrandPartners></BrandPartners>
             <FashionBlog></FashionBlog>
             <NewsletterBanner></NewsletterBanner>
-            
+
             <HowItWorks></HowItWorks>
             <WhyChooseUs></WhyChooseUs>
             <ContactCTA></ContactCTA>
+            <WorkingProcess></WorkingProcess>
         </div>
     );
 };

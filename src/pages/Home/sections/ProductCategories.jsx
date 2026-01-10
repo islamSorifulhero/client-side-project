@@ -4,14 +4,14 @@ import { Link } from "react-router";
 import shopImg from "../../../assets/shop-img.jpg"
 import Electronic from "../../../assets/Electronic-Devices.png";
 import Fashion from "../../../assets/Fashion.jpg";
-import HomeAppliances from "../../../assets/Home appliances.jpg";
+import HomeAppliances from "../../../assets/Home-img.jpg";
 import garments from "../../../assets/garments.mp4";
 
 const categories = [
     { name: "shop", img: shopImg, count: "250+ Items" },
     { name: "Electronics", img: Electronic, count: "150+ Items" },
     { name: "Fashion", img: Fashion, count: "320+ Items" },
-    { name: "Home Appliances", img: HomeAppliances, count: "90+ Items" },
+    { name: "Shopping", img: HomeAppliances, count: "490+ Items" },
 ];
 
 const ProductCategories = () => {

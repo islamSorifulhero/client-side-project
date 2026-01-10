@@ -7,73 +7,103 @@ const stats = [
         id: 1,
         label: "Happy Clients",
         value: "10K+",
-        icon: <FaUsers className="text-4xl" />,
-        description: "Trusted by thousands globally"
+        icon: <FaUsers className="text-3xl" />,
+        description: "Trusted by customers worldwide",
     },
     {
         id: 2,
         label: "Global Stores",
         value: "45+",
-        icon: <FaGlobe className="text-4xl" />,
-        description: "Operating in 12 countries"
+        icon: <FaGlobe className="text-3xl" />,
+        description: "Operating across 12 countries",
     },
     {
         id: 3,
-        label: "Designs Ready",
+        label: "Designs Created",
         value: "1200+",
-        icon: <FaTshirt className="text-4xl" />,
-        description: "New designs every week"
+        icon: <FaTshirt className="text-3xl" />,
+        description: "Fresh designs every season",
     },
     {
         id: 4,
         label: "Positive Reviews",
-        value: "99%",
-        icon: <FaStar className="text-4xl" />,
-        description: "Highest satisfaction rate"
-    }
+        value: "98%+",
+        icon: <FaStar className="text-3xl" />,
+        description: "High customer satisfaction rate",
+    },
 ];
 
 const StatsSection = () => {
     return (
-        <section className="py-20 bg-gray-50 dark:bg-[#111827] transition-colors duration-300">
-            <div className="container mx-auto px-6 lg:px-12">
-                
+        <section className="py-20 bg-base-100">
+            <div className="container mx-auto px-6">
+                {/* Section Header */}
+                <div className="text-center mb-14">
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-base-content">
+                        Our Growth in Numbers
+                    </h2>
+                    <p className="mt-4 max-w-2xl mx-auto text-base-content/70">
+                        These numbers reflect our commitment to quality, customer
+                        satisfaction, and continuous innovation in fashion.
+                    </p>
+                </div>
+
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {stats.map((stat, index) => (
                         <motion.div
                             key={stat.id}
-                            initial={{ opacity: 0, scale: 0.5 }}
+                            initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ 
-                                duration: 0.5, 
+                            transition={{
+                                duration: 0.5,
                                 delay: index * 0.1,
-                                type: "spring", 
-                                stiffness: 100 
+                                type: "spring",
+                                stiffness: 120,
                             }}
-                            className="relative group p-8 bg-white dark:bg-gray-800 rounded-[2rem] shadow-lg hover:shadow-2xl border border-gray-100 dark:border-gray-700 text-center transition-all duration-300"
+                            className="
+                group relative p-8 rounded-2xl text-center
+                bg-base-200 shadow hover:shadow-lg
+                transition-all duration-300
+              "
                         >
-                            {/* Icon with Animated Background */}
-                            <div className="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                            {/* Icon */}
+                            <div
+                                className="
+                  mb-6 inline-flex items-center justify-center
+                  w-20 h-20 rounded-full
+                  bg-primary/10 text-primary
+                  group-hover:bg-primary group-hover:text-primary-content
+                  transition-all duration-500
+                "
+                            >
                                 {stat.icon}
                             </div>
 
-                            {/* Value & Label */}
-                            <h3 className="text-4xl font-black text-gray-900 dark:text-white mb-2">
+                            {/* Value */}
+                            <h3 className="text-4xl font-extrabold text-base-content mb-2">
                                 {stat.value}
                             </h3>
-                            <p className="text-lg font-bold text-primary uppercase tracking-widest mb-3">
+
+                            {/* Label */}
+                            <p className="text-sm font-bold text-primary uppercase tracking-widest mb-3">
                                 {stat.label}
                             </p>
-                            
+
                             {/* Description */}
-                            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                            <p className="text-sm text-base-content/70 font-medium">
                                 {stat.description}
                             </p>
 
-                            {/* Bottom Decorative Line */}
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1.5 bg-primary rounded-full group-hover:w-1/3 transition-all duration-500"></div>
+                            {/* Decorative Line */}
+                            <div
+                                className="
+                  absolute bottom-0 left-1/2 -translate-x-1/2
+                  w-0 h-1.5 bg-primary rounded-full
+                  group-hover:w-1/3 transition-all duration-500
+                "
+                            ></div>
                         </motion.div>
                     ))}
                 </div>

@@ -3,46 +3,97 @@ import { motion } from "framer-motion";
 import { FaCreditCard, FaShoppingCart } from "react-icons/fa";
 import { FaTruckFast } from "react-icons/fa6";
 
-const steps = [
-    {
-        icon: <FaShoppingCart className="text-4xl text-primary" />,
-        title: "Browse Products",
-        desc: "Search thousands of top-quality items at the best prices."
-    },
-    {
-        icon: <FaCreditCard className="text-4xl text-primary" />,
-        title: "Place Your Order",
-        desc: "Quick, secure, and smooth checkout experience."
-    },
-    {
-        icon: <FaTruckFast className="text-4xl text-primary" />,
-        title: "Fast Delivery",
-        desc: "We deliver your product safely to your doorstep."
-    }
-];
 
 const HowItWorks = () => {
     return (
-        <div className="max-w-6xl mx-auto px-4 py-16">
-            <h2 className="text-3xl font-bold text-center mb-10">How It Works</h2>
+        <section className="py-16 bg-base-100">
+            <div className="container mx-auto px-6">
+                {/* Section Header */}
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold text-base-content">
+                        Frequently Asked Questions
+                    </h2>
+                    <p className="mt-3 text-base-content/70 max-w-2xl mx-auto">
+                        Find quick answers to common questions about orders, delivery,
+                        payments, and returns.
+                    </p>
+                </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {steps.map((s, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.2, duration: 0.5 }}
-                        viewport={{ once: true }}
-                        className="card shadow-lg p-6 text-center rounded-xl"
-                    >
-                        <div className="mb-4 flex justify-center">{s.icon}</div>
-                        <h3 className="text-xl font-bold mb-2">{s.title}</h3>
-                        <p className="text-gray-600">{s.desc}</p>
-                    </motion.div>
-                ))}
+                {/* FAQ Items */}
+                <div className="space-y-4">
+                    {/* FAQ 1 */}
+                    <div className="collapse collapse-arrow bg-base-200">
+                        <input type="radio" name="faq-accordion" defaultChecked />
+                        <div className="collapse-title text-lg font-semibold">
+                            How do I place an order?
+                        </div>
+                        <div className="collapse-content text-base-content/80">
+                            <p>
+                                Browse products, add your desired items to the cart, and proceed
+                                to checkout. Complete the payment process to confirm your order.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* FAQ 2 */}
+                    <div className="collapse collapse-arrow bg-base-200">
+                        <input type="radio" name="faq-accordion" />
+                        <div className="collapse-title text-lg font-semibold">
+                            What payment methods do you accept?
+                        </div>
+                        <div className="collapse-content text-base-content/80">
+                            <p>
+                                We accept credit/debit cards, mobile banking, and secure online
+                                payment gateways for a smooth checkout experience.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* FAQ 3 */}
+                    <div className="collapse collapse-arrow bg-base-200">
+                        <input type="radio" name="faq-accordion" />
+                        <div className="collapse-title text-lg font-semibold">
+                            How long does delivery take?
+                        </div>
+                        <div className="collapse-content text-base-content/80">
+                            <p>
+                                Standard delivery usually takes 3–5 business days, depending on
+                                your location and order volume.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* FAQ 4 */}
+                    <div className="collapse collapse-arrow bg-base-200">
+                        <input type="radio" name="faq-accordion" />
+                        <div className="collapse-title text-lg font-semibold">
+                            Can I return or exchange a product?
+                        </div>
+                        <div className="collapse-content text-base-content/80">
+                            <p>
+                                Yes, you can request a return or exchange within 7 days of
+                                receiving your order, provided the product is unused and in its
+                                original condition.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* FAQ 5 */}
+                    <div className="collapse collapse-arrow bg-base-200">
+                        <input type="radio" name="faq-accordion" />
+                        <div className="collapse-title text-lg font-semibold">
+                            Is my payment information secure?
+                        </div>
+                        <div className="collapse-content text-base-content/80">
+                            <p>
+                                Absolutely. We use encrypted and secure payment gateways to
+                                protect your personal and financial information.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     );
 };
 
