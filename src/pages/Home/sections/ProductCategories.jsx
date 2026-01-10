@@ -19,18 +19,6 @@ const ProductCategories = () => {
     return (
         <section className="bg-base-100 transition-colors duration-300">
 
-            {/* VIDEO BANNER */}
-            <div className="w-full overflow-hidden shadow-lg">
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    src={garments}
-                    className="w-full h-[50vh] object-cover"
-                />
-            </div>
-
             {/* CATEGORY SECTION */}
             <div className="max-w-7xl mx-auto px-6 py-20">
 
@@ -94,6 +82,18 @@ const ProductCategories = () => {
                         </motion.div>
                     ))}
                 </div>
+            </div>
+
+            {/* VIDEO BANNER */}
+            <div className="w-full overflow-hidden shadow-lg">
+                <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    src={garments}
+                    className="w-full h-[50vh] object-cover"
+                />
             </div>
         </section>
     );
