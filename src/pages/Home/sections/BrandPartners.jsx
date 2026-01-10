@@ -12,9 +12,9 @@ const partners = [
 
 const BrandPartners = () => {
     return (
-        <section className="py-16 bg-gray-50 dark:bg-[#111827] border-y border-gray-100 dark:border-gray-800 overflow-hidden transition-colors duration-300">
+        <section className="py-16 bg-base-100 border-y border-base-content/20 overflow-hidden transition-colors duration-300">
             <div className="container mx-auto px-6 mb-10 text-center">
-                <p className="text-xs font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-base-content/50">
                     Trusted by Global Fashion Giants
                 </p>
             </div>
@@ -30,7 +30,6 @@ const BrandPartners = () => {
                         ease: "linear"
                     }}
                 >
-                    {/* First Set of Logos */}
                     {[...partners, ...partners].map((partner, index) => (
                         <div key={index} className="flex-shrink-0 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
                             <img

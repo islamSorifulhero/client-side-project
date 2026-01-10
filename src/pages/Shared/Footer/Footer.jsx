@@ -5,16 +5,16 @@ import Logo from "../../../components/Logo/Logo";
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-100 dark:bg-[#0b1120] text-gray-700 dark:text-gray-300 transition-colors duration-300">
+        <footer className="bg-base-200 text-base-content transition-colors duration-500">
             {/* Top Footer Section */}
             <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                
+
                 {/* Brand & Mission */}
                 <div className="space-y-6">
                     <div className="flex items-center">
                         <Logo />
                     </div>
-                    <p className="text-sm font-medium leading-relaxed">
+                    <p className="text-sm font-medium leading-relaxed text-base-content/70">
                         Leading the future of garment production with transparency and innovation. 
                         We deliver quality apparel that blends modern style with sustainable craftsmanship.
                     </p>
@@ -22,7 +22,7 @@ const Footer = () => {
 
                 {/* Quick Navigation */}
                 <div>
-                    <h3 className="text-lg font-black uppercase tracking-tighter text-gray-900 dark:text-white mb-6">
+                    <h3 className="text-lg font-black uppercase tracking-tighter text-base-content mb-6">
                         Explore
                     </h3>
                     <ul className="space-y-4 font-bold text-sm uppercase tracking-wider">
@@ -35,20 +35,20 @@ const Footer = () => {
 
                 {/* Services/Categories */}
                 <div>
-                    <h3 className="text-lg font-black uppercase tracking-tighter text-gray-900 dark:text-white mb-6">
+                    <h3 className="text-lg font-black uppercase tracking-tighter text-base-content mb-6">
                         Categories
                     </h3>
                     <ul className="space-y-4 font-bold text-sm uppercase tracking-wider">
-                        <li className="hover:text-primary cursor-pointer">Men's Fashion</li>
-                        <li className="hover:text-primary cursor-pointer">Women's Wear</li>
-                        <li className="hover:text-primary cursor-pointer">Electronics</li>
-                        <li className="hover:text-primary cursor-pointer">Home Appliances</li>
+                        <li className="hover:text-primary cursor-pointer transition-colors">Men's Fashion</li>
+                        <li className="hover:text-primary cursor-pointer transition-colors">Women's Wear</li>
+                        <li className="hover:text-primary cursor-pointer transition-colors">Electronics</li>
+                        <li className="hover:text-primary cursor-pointer transition-colors">Home Appliances</li>
                     </ul>
                 </div>
 
                 {/* Contact Information */}
                 <div>
-                    <h3 className="text-lg font-black uppercase tracking-tighter text-gray-900 dark:text-white mb-6">
+                    <h3 className="text-lg font-black uppercase tracking-tighter text-base-content mb-6">
                         Get In Touch
                     </h3>
                     <ul className="space-y-4 font-medium text-sm">
@@ -69,15 +69,15 @@ const Footer = () => {
             </div>
 
             {/* Bottom Bar */}
-            <div className="border-t border-gray-200 dark:border-gray-800">
+            <div className="border-t border-base-content/20">
                 <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-xs font-bold uppercase tracking-widest opacity-60 text-center md:text-left">
+                    <p className="text-xs font-bold uppercase tracking-widest opacity-60 text-center md:text-left text-base-content/70">
                         © {new Date().getFullYear()} Garments Project. All Rights Reserved.
                     </p>
                     <div className="flex gap-6 text-[10px] font-black uppercase tracking-tighter opacity-60">
-                        <a href="#" className="hover:text-primary">Privacy Policy</a>
-                        <a href="#" className="hover:text-primary">Terms of Service</a>
-                        <a href="#" className="hover:text-primary">Cookie Policy</a>
+                        <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
+                        <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+                        <a href="#" className="hover:text-primary transition-colors">Cookie Policy</a>
                     </div>
                 </div>
             </div>

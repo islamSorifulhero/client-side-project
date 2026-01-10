@@ -1,7 +1,7 @@
 import React from 'react';
 const teamMembers = [
   {
-    name: "Arif Hasan",
+    name: "Arifa Khatun",
     role: "Master Tailor",
     img: "https://i.pravatar.cc/150?u=101",
   },
@@ -11,7 +11,7 @@ const teamMembers = [
     img: "https://i.pravatar.cc/150?u=102",
   },
   {
-    name: "Sabbir Ahmed",
+    name: "Sabana Begum",
     role: "Quality Control Head",
     img: "https://i.pravatar.cc/150?u=103",
   },
