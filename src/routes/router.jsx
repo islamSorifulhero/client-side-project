@@ -49,11 +49,13 @@ export const router = createBrowserRouter([
 
       {
         path: "product/:productId",
-        element: <PrivateRoute><ProductDetails></ProductDetails></PrivateRoute>
+        // element: <PrivateRoute><ProductDetails></ProductDetails></PrivateRoute>
+        element: <ProductDetails></ProductDetails>
       },
       {
         path: "booking/:id",
-        element: <PrivateRoute><BookingForm></BookingForm></PrivateRoute>
+        // element: <PrivateRoute><BookingForm></BookingForm></PrivateRoute>
+        element: <BookingForm></BookingForm>
       },
     ]
   },

@@ -17,7 +17,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
         setLoading(true);
-        axiosSecure.get(`/products/${productId}`) 
+        axiosSecure.get(`/products/${productId}`)
             .then(res => {
                 setProduct(res.data);
                 setLoading(false);
@@ -42,7 +42,7 @@ const ProductDetails = () => {
             transition={{ duration: 0.5 }}
         >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                
+
                 <div className="space-y-4">
                     {product.images?.length > 0 ? (
                         product.images.map((img, index) => (
@@ -80,8 +80,8 @@ const ProductDetails = () => {
                         <p>Minimum Order: <span className="font-semibold">{product.minimumOrder}</span></p>
                     </div>
 
-                    {isBuyer ? (
-                        <button 
+                    {/* {isBuyer ? (
+                        <button
                             onClick={() => navigate(`/booking/${product._id}`)}
                             className="btn btn-primary w-full mt-4 text-white"
                         >
@@ -91,7 +91,12 @@ const ProductDetails = () => {
                         <p className="text-red-500">Admins and Managers cannot place orders.</p>
                     ) : (
                         <p className="text-red-500">Please log in to place an order.</p>
-                    )}
+                    )} */}
+
+                    <button
+                            onClick={() => navigate(`/booking/${product._id}`)}
+                            className="btn btn-primary w-full mt-4 text-white"
+                        >Place Order</button>
                 </div>
             </div>
         </motion.div>
