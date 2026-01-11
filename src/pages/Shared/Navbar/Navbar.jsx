@@ -6,6 +6,7 @@ import {
     FaSignOutAlt,
     FaThLarge,
     FaUserCircle,
+    FaChevronDown,
 } from "react-icons/fa";
 import Logo from "../../../components/Logo/Logo";
 import useAuth from "../../../hooks/useAuth";
@@ -47,11 +48,11 @@ const Navbar = () => {
 
     const guestLinks = (
         <>
-            {/* <li>
-                <NavLink to="/about" className={navLinkStyles}>
-                    About
+            <li>
+                <NavLink to="/contact" className={navLinkStyles}>
+                    Contact
                 </NavLink>
-            </li> */}
+            </li>
         </>
     );
 
@@ -68,8 +69,8 @@ const Navbar = () => {
                 </NavLink>
             </li>
             <li>
-                <NavLink to="/wishlist" className={navLinkStyles}>
-                    Wishlist
+                <NavLink to="/support" className={navLinkStyles}>
+                    Support
                 </NavLink>
             </li>
         </>
@@ -146,6 +147,7 @@ const Navbar = () => {
                                     alt="User"
                                 />
                             </div>
+                            <FaChevronDown className="text-[10px] text-base-content/70 group-hover:text-primary transition-colors" />
                         </label>
 
                         <ul
