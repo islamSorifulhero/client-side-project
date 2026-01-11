@@ -37,29 +37,34 @@ const Navbar = () => {
                     All Products
                 </NavLink>
             </li>
-        </>
-    );
-
-    const guestLinks = (
-        <>
             <li>
                 <NavLink to="/about" className={navLinkStyles}>
                     About
                 </NavLink>
             </li>
-            <li>
-                <NavLink to="/contact" className={navLinkStyles}>
-                    Contact
+        </>
+    );
+
+    const guestLinks = (
+        <>
+            {/* <li>
+                <NavLink to="/about" className={navLinkStyles}>
+                    About
                 </NavLink>
-            </li>
+            </li> */}
         </>
     );
 
     const userLinks = (
         <>
             <li>
-                <NavLink to="/my-orders" className={navLinkStyles}>
-                    My Orders
+                <NavLink to="/contact" className={navLinkStyles}>
+                    Contact
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/blog" className={navLinkStyles}>
+                    Blog
                 </NavLink>
             </li>
             <li>

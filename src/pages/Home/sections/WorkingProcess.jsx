@@ -7,7 +7,7 @@ const teamMembers = [
   },
   {
     name: "Nusrat Jahan",
-    role: "Lead Fashion Designer",
+    role: "Leady Fashion Designer",
     img: "https://i.pravatar.cc/150?u=102",
   },
   {

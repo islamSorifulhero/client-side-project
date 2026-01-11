@@ -37,6 +37,7 @@ import OrderDetails from "../pages/Dashboard/Admin/OrderDetails";
 import TrackingOrder from "../pages/Dashboard/TrackingOrder";
 import UpdateProduct from "../pages/Dashboard/Manager/UpdateProduct";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
+import Blog from "../pages/Blog/Blog";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,7 @@ export const router = createBrowserRouter([
       { path: "all-products", Component: AllProducts },
       { path: "about", Component: AboutUs },
       { path: "contact", Component: Contact },
+      { path: "blog", Component: Blog },
 
       {
         path: "product/:productId",
