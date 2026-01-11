@@ -36,6 +36,7 @@ import EditProduct from "../pages/Dashboard/EditProduct";
 import OrderDetails from "../pages/Dashboard/Admin/OrderDetails";
 import TrackingOrder from "../pages/Dashboard/TrackingOrder";
 import UpdateProduct from "../pages/Dashboard/Manager/UpdateProduct";
+import DashboardHome from "../pages/Dashboard/DashboardHome";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +74,7 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
+      { index: true, Component: DashboardHome },
       { path: "profile", Component: Profile },
       { path: "my-orders", Component: MyOrders },
       { path: "track-order/:id", Component: TrackingOrder },
