@@ -39,6 +39,7 @@ import UpdateProduct from "../pages/Dashboard/Manager/UpdateProduct";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import Blog from "../pages/Blog/Blog";
 import Support from "../pages/Support/Support";
+import Privacy from "../pages/Privacy/Privacy";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,7 @@ export const router = createBrowserRouter([
       { path: "contact", Component: Contact },
       { path: "blog", Component: Blog },
       { path: "support", Component: Support },
+      { path: "privacy", Component: Privacy },
 
       {
         path: "product/:productId",

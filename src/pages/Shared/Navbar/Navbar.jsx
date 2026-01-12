@@ -73,6 +73,11 @@ const Navbar = () => {
                     Support
                 </NavLink>
             </li>
+            <li>
+                <NavLink to="/privacy" className={navLinkStyles}>
+                    Privacy
+                </NavLink>
+            </li>
         </>
     );
 

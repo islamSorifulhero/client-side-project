@@ -21,20 +21,18 @@ const Home = () => {
         <div>
             <Hero></Hero>
             <ProductCategories></ProductCategories>
-            <StatsSection></StatsSection>
+            <WhyChooseUs></WhyChooseUs>
             <FeaturedProducts></FeaturedProducts>
-            {/* <ReviewsCarousel></ReviewsCarousel> */}
-            <Testimonials></Testimonials>
+            <StatsSection></StatsSection>
             <OurServices></OurServices>
             <SpecialOffer></SpecialOffer>
+            <HowItWorks></HowItWorks>
+            <WorkingProcess></WorkingProcess>
+            <Testimonials></Testimonials>
             <BrandPartners></BrandPartners>
             <FashionBlog></FashionBlog>
             <NewsletterBanner></NewsletterBanner>
-
-            <HowItWorks></HowItWorks>
-            <WhyChooseUs></WhyChooseUs>
             <ContactCTA></ContactCTA>
-            <WorkingProcess></WorkingProcess>
         </div>
     );
 };
