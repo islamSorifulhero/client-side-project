@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }) => {
     
     if (loading) {
         return <div>
-            <span className="loading loading-infinity loading-xl"></span>
+            <span className="loading loading-bars loading-xl"></span>
         </div>
     }
 
