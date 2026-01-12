@@ -29,7 +29,7 @@ const ProductDetails = () => {
             });
     }, [productId, axiosSecure]);
 
-    if (loading) return <p className="text-center py-20">Loading...</p>;
+    if (loading) return <p className="text-center py-20"><span className="loading loading-bars loading-xl"></span></p>;
     if (!product) return <p className="text-center py-20">Product not found</p>;
 
     const isBuyer = user && user.role !== "admin" && user.role !== "manager";
