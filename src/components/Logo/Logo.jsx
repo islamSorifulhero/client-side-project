@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 const Logo = () => {
     return (
         <Link to="/">
-            <div className='flex items-center p-2 rounded-lg transition duration-300 hover:bg-gray-500 animate__animated animate__pulse'>
+            <div className='flex items-center p-2 rounded-lg transition duration-300 hover:bg-white-400 animate__animated animate__pulse'>
                 <img className='w-30 h-20' src={logo} alt="" />
             </div>
         </Link>
