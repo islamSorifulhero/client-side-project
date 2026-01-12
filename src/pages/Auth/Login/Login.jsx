@@ -40,18 +40,16 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-base-200">
             <div className="flex flex-col lg:flex-row w-full max-w-6xl bg-base-100 shadow-2xl overflow-hidden lg:rounded-3xl m-4">
-                
-                {/* 🎨 Left Side: Decorative Section (Image/Video) */}
+
                 <div className="hidden lg:flex flex-col justify-center items-center lg:w-1/2 bg-primary p-12 text-white relative">
                     <div className="absolute inset-0 opacity-20">
-                        {/* এখানে আপনি ফ্যাক্টরির কোনো ছবি দিতে পারেন */}
-                        <img 
-                            src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg" 
-                            alt="Background" 
+                        <img
+                            src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg"
+                            alt="Background"
                             className="w-full h-full object-cover"
                         />
                     </div>
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="relative z-10 text-center"
@@ -100,9 +98,9 @@ const Login = () => {
                                 Sign In
                             </button>
 
-                            <button 
-                                type="button" 
-                                onClick={handleDemoLogin} 
+                            <button
+                                type="button"
+                                onClick={handleDemoLogin}
                                 className="btn btn-outline btn-secondary w-full font-bold uppercase"
                             >
                                 Demo Access
@@ -110,11 +108,11 @@ const Login = () => {
                         </form>
 
                         <div className="divider my-8 font-medium text-base-content/40">OR CONTINUE WITH</div>
-                        
+
                         <SocialLogin />
 
                         <p className="text-center mt-8 font-medium">
-                            Don't have an account? 
+                            Don't have an account?
                             <Link to="/register" className="text-primary hover:underline ml-2">Create Account</Link>
                         </p>
                     </div>

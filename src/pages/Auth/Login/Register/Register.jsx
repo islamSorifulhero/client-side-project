@@ -62,17 +62,16 @@ const Register = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-base-200 py-10">
             <div className="flex flex-col lg:flex-row-reverse w-full max-w-6xl bg-base-100 shadow-2xl overflow-hidden lg:rounded-3xl m-4">
-                
-                {/* 🎨 Right Side: Decorative Section (Register Theme) */}
+
                 <div className="hidden lg:flex flex-col justify-center items-center lg:w-1/2 bg-secondary p-12 text-white relative">
                     <div className="absolute inset-0 opacity-20">
-                        <img 
-                            src="https://images.pexels.com/photos/3184433/pexels-photo-3184433.jpeg" 
-                            alt="Textile Working" 
+                        <img
+                            src="https://images.pexels.com/photos/3184433/pexels-photo-3184433.jpeg"
+                            alt="Textile Working"
                             className="w-full h-full object-cover"
                         />
                     </div>
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         className="relative z-10 text-center"
@@ -84,7 +83,6 @@ const Register = () => {
                     </motion.div>
                 </div>
 
-                {/* 📝 Left Side: Register Form */}
                 <div className="w-full lg:w-1/2 p-8 md:p-12">
                     <div className="max-w-md mx-auto">
                         <h3 className="text-4xl font-black text-base-content mb-2">Create Account</h3>
@@ -134,11 +132,11 @@ const Register = () => {
                         </form>
 
                         <div className="divider my-6 text-base-content/40">OR</div>
-                        
+
                         <SocialLogin />
 
                         <p className="text-center mt-6 font-medium">
-                            Already have an account? 
+                            Already have an account?
                             <Link to="/login" className="text-secondary hover:underline ml-2">Login here</Link>
                         </p>
                     </div>
