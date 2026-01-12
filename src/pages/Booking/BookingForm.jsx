@@ -128,7 +128,7 @@ const BookingForm = () => {
     }
   };
 
-  if (loading) return <p className="text-center py-8">Loading product...</p>;
+  if (loading) return <p className="text-center py-8"><span className="loading loading-bars loading-xl"></span></p>;
   if (!product) return <p className="text-center py-8">Product not found. <button onClick={() => navigate('/all-products')} className="btn btn-link">Go to All Products</button></p>;
 
   const min = product.minimumOrder ?? product.minOrder ?? 1;
