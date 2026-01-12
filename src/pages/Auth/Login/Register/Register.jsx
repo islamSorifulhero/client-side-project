@@ -6,6 +6,7 @@ import axios from 'axios';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { Link, useLocation, useNavigate } from 'react-router';
+import { motion } from 'framer-motion';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -45,7 +46,6 @@ const Register = () => {
 
                                 axiosSecure.post('/users', userInfo)
                                     .then(res => {
-                                        console.log(res);
                                         if (res.data.insertedId) {
                                             toast.success('User registered successfully!');
                                             navigate(location.state?.from || '/login');
@@ -60,45 +60,89 @@ const Register = () => {
     };
 
     return (
-        <div className="card bg-base-100 w-full mx-auto max-w-sm shadow-2xl mt-20">
-            <h3 className="text-3xl text-center font-bold mb-4">Please Register</h3>
-            <form className="card-body" onSubmit={handleSubmit(handleRegistration)}>
-                <label className="label">Name</label>
-                <input type="text" {...register('name', { required: true })} className="input input-bordered w-full" placeholder="Your Name" />
-                {errors.name && <p className='text-red-500'>Name is required</p>}
+        <div className="min-h-screen flex items-center justify-center bg-base-200 py-10">
+            <div className="flex flex-col lg:flex-row-reverse w-full max-w-6xl bg-base-100 shadow-2xl overflow-hidden lg:rounded-3xl m-4">
+                
+                {/* 🎨 Right Side: Decorative Section (Register Theme) */}
+                <div className="hidden lg:flex flex-col justify-center items-center lg:w-1/2 bg-secondary p-12 text-white relative">
+                    <div className="absolute inset-0 opacity-20">
+                        <img 
+                            src="https://images.pexels.com/photos/3184433/pexels-photo-3184433.jpeg" 
+                            alt="Textile Working" 
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                    <motion.div 
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="relative z-10 text-center"
+                    >
+                        <h2 className="text-5xl font-black mb-6 uppercase">Join Our Hub</h2>
+                        <p className="text-lg font-medium opacity-90">
+                            Be a part of our garment production family. Register today to start your journey.
+                        </p>
+                    </motion.div>
+                </div>
 
-                <label className="label">Photo</label>
-                <input type="file" {...register('photo', { required: true })} className="file-input w-full" />
-                {errors.photo && <p className='text-red-500'>Photo is required</p>}
+                {/* 📝 Left Side: Register Form */}
+                <div className="w-full lg:w-1/2 p-8 md:p-12">
+                    <div className="max-w-md mx-auto">
+                        <h3 className="text-4xl font-black text-base-content mb-2">Create Account</h3>
+                        <p className="text-base-content/60 mb-6">Join us and manage your orders efficiently.</p>
 
-                <label className="label">Email</label>
-                <input type="email" {...register('email', { required: true })} className="input input-bordered w-full" placeholder="Email" />
-                {errors.email && <p className='text-red-500'>Email is required</p>}
+                        <form onSubmit={handleSubmit(handleRegistration)} className="space-y-3">
+                            {/* Name Input */}
+                            <div className="form-control">
+                                <label className="label font-bold">Full Name</label>
+                                <input type="text" {...register('name', { required: true })} className="input input-bordered w-full" placeholder="Soriful Islam" />
+                                {errors.name && <span className="text-error text-sm">Name is required</span>}
+                            </div>
 
-                <label className="label">Password</label>
-                <input type="password"
-                    {...register('password', { required: true, minLength: 6 })}
-                    className="input input-bordered w-full"
-                    placeholder="Password"
-                />
-                {errors.password?.type === 'required' && <p className='text-red-500'>Password is required</p>}
-                {errors.password?.type === 'minLength' && <p className='text-red-500'>Password must be at least 6 characters</p>}
+                            {/* Photo Upload */}
+                            <div className="form-control">
+                                <label className="label font-bold">Profile Photo</label>
+                                <input type="file" {...register('photo', { required: true })} className="file-input file-input-bordered file-input-primary w-full" />
+                                {errors.photo && <span className="text-error text-sm">Photo is required</span>}
+                            </div>
 
-                <label className="label">Role</label>
-                <select {...register('role', { required: true })} className="select select-bordered w-full">
-                    <option value="buyer">Buyer</option>
-                    <option value="manager">Manager</option>
-                </select>
+                            {/* Email Input */}
+                            <div className="form-control">
+                                <label className="label font-bold">Email Address</label>
+                                <input type="email" {...register('email', { required: true })} className="input input-bordered w-full" placeholder="email@garments.com" />
+                                {errors.email && <span className="text-error text-sm">Email is required</span>}
+                            </div>
 
-                <button type="submit" className="btn btn-primary mt-4 w-full">Register</button>
-            </form>
+                            {/* Password Input */}
+                            <div className="form-control">
+                                <label className="label font-bold">Password</label>
+                                <input type="password" {...register('password', { required: true, minLength: 6 })} className="input input-bordered w-full" placeholder="••••••••" />
+                                {errors.password && <span className="text-error text-sm">At least 6 characters required</span>}
+                            </div>
 
-            <p className='text-center mt-4'>Already have an account?
-                <Link className='text-blue-400 underline ml-1' to="/login">Login</Link>
-            </p>
+                            {/* Role Selection */}
+                            <div className="form-control">
+                                <label className="label font-bold">Select Role</label>
+                                <select {...register('role', { required: true })} className="select select-bordered w-full">
+                                    <option value="buyer">Buyer</option>
+                                    <option value="manager">Manager</option>
+                                </select>
+                            </div>
 
-            <div className="mt-4">
-                <SocialLogin />
+                            <button type="submit" className="btn btn-primary w-full text-white font-bold uppercase mt-4">
+                                Register Now
+                            </button>
+                        </form>
+
+                        <div className="divider my-6 text-base-content/40">OR</div>
+                        
+                        <SocialLogin />
+
+                        <p className="text-center mt-6 font-medium">
+                            Already have an account? 
+                            <Link to="/login" className="text-secondary hover:underline ml-2">Login here</Link>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     );
